@@ -11,8 +11,9 @@ some of Matthew Goodman's eepromTool-ds2433 code from:
 	https://github.com/meawoppl/eepromTool-ds2433
 and the addition of a GUI to make reading and writing a DS2433 chip a point and
 click operation.
----------------------------------------
+
 Dependencies to run CartridgeWriter.exe
+----
 	-32 or 64 bit PC with Windows XP or later (Only tested on XP and 7 so far)
 	-Arduino configured as shown at https://github.com/meawoppl/eepromTool-ds2433
 		* OneWire library from http://www.pjrc.com/teensy/td_libs_OneWire.html
@@ -30,8 +31,9 @@ Dependencies to run CartridgeWriter.exe
 			DS2433:		Data Pin					Ground
 			
 	-At least .Net Framework 4.0
-----------------------------------------
+
 Dependencies to compile Cartridge Writer
+----
 Cartridge Writer was written and compiled using Microsoft Visual Studio Express 2013
 for Windows Desktop.  Given that that Express is the base flavor of Visual Studio
 this code should compile with any other flavor of Visual Studio 2013 that can compile
