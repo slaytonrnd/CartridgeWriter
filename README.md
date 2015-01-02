@@ -14,6 +14,9 @@ click operation.
 
 Running CartridgeWriter.exe
 ----
+CartridgeWriter.exe can be downloaded as a part of the CartridgeWriter repository
+and is located in the Release directory of the repository.  
+
 Set up the following before running:
 
 	-32 or 64 bit PC with Windows XP or later (Only tested on XP and 7 so far)
@@ -33,11 +36,11 @@ Set up the following before running:
 						  ---						 ---
 			DS2433:		Data Pin					Ground
 
-CartridgeWriter.exe is located in the Release directory.  Plug in the Arduino and
-wait for it to be recognized by Windows before running CartridgeWriter.exe.  Run
-CartridgeWriter.exe:
+Plug in the Arduino and wait for it to be recognized by Windows before running
+CartridgeWriter.exe.
 
-	-Select the Arduino in the Device dropdown.
+	-Run CartridgeWriter.exe
+	-Select an Arduino device in the Device dropdown.
 	-Select a Printer Type in the Printer Type dropdown.
 	-Press the Read button and remaining fields are populated by reading DS2433 chip.
 		* Read makes a copy of the DS2433 chip contents to a file.
@@ -46,7 +49,7 @@ CartridgeWriter.exe:
 	-Make changes in "Change Cartridge Values To" column.
 	-Press the Write button to write changes to DS2433 chip.
 
-Compiling CartridgeWriter
+Compiling Cartridge Writer
 ----
 Cartridge Writer was written and compiled using Microsoft Visual Studio Express 2013
 for Windows Desktop.  Given that that Express is the base flavor of Visual Studio
@@ -54,5 +57,6 @@ this code should compile with any other flavor of Visual Studio 2013 that can co
 c# desktop applications.  This has not been tested with any other versions of Visual
 Studio, but if anyone tries compiling with a different version let me know what
 happens and I can post the results here.
+
 	-Visual Studio 2013
 	
