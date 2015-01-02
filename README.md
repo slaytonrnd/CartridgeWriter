@@ -17,6 +17,7 @@ Running CartridgeWriter.exe
 Set up the following before running:
 
 	-32 or 64 bit PC with Windows XP or later (Only tested on XP and 7 so far)
+	-At least .Net Framework 4.0
 	-Arduino configured as shown at https://github.com/meawoppl/eepromTool-ds2433
 		* OneWire library from http://www.pjrc.com/teensy/td_libs_OneWire.html
 		* onewireProxy from https://github.com/meawoppl/eepromTool-ds2433
@@ -31,11 +32,19 @@ Set up the following before running:
 						   |						  |
 						  ---						 ---
 			DS2433:		Data Pin					Ground
-			
-	-At least .Net Framework 4.0
 
-Plug in an Arduino and wait for it to be recognized by Windows before running
-CartridgeWriter.exe.
+CartridgeWriter.exe is located in the Release directory.  Plug in the Arduino and
+wait for it to be recognized by Windows before running CartridgeWriter.exe.  Run
+CartridgeWriter.exe:
+
+	-Select the Arduino in the Device dropdown.
+	-Select a Printer Type in the Printer Type dropdown.
+	-Press the Read button and remaining fields are populated by reading DS2433 chip.
+		* Read makes a copy of the DS2433 chip contents to a file.
+		* Content file is placed in EEPROMFiles/<chip_id> directory.
+		* Content file's name is YYYYMMdd.HHmmss.bin.
+	-Make changes in "Change Cartridge Values To" column.
+	-Press the Write button to write changes to DS2433 chip.
 
 Compiling CartridgeWriter
 ----
