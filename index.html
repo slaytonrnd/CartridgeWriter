@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Cartridge Writer : Program that can use an Arduino to read / write a DS2433 chip from StrataSys printer cartridges.">
+    <meta name="description" content="Cartridge Writer : Windows program that can use an Arduino to read / write a DS2433 chip from StrataSys printer cartridges.">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/slaytonrnd/CartridgeWriter">View on GitHub</a>
 
           <h1 id="project_title">Cartridge Writer</h1>
-          <h2 id="project_tagline">Program that can use an Arduino to read / write a DS2433 chip from StrataSys printer cartridges.</h2>
+          <h2 id="project_tagline">Windows program that can use an Arduino to read / write a DS2433 chip from StrataSys printer cartridges.</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/slaytonrnd/CartridgeWriter/zipball/master">Download this project as a .zip file</a>
@@ -48,6 +48,9 @@ click operation.</p>
 <h2>
 <a id="running-cartridgewriterexe" class="anchor" href="#running-cartridgewriterexe" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running CartridgeWriter.exe</h2>
 
+<p>CartridgeWriter.exe can be downloaded as a part of the CartridgeWriter repository
+and is located in the Release directory of the repository.  </p>
+
 <p>Set up the following before running:</p>
 
 <pre><code>-32 or 64 bit PC with Windows XP or later (Only tested on XP and 7 so far)
@@ -68,11 +71,11 @@ click operation.</p>
         DS2433:     Data Pin                    Ground
 </code></pre>
 
-<p>CartridgeWriter.exe is located in the Release directory.  Plug in the Arduino and
-wait for it to be recognized by Windows before running CartridgeWriter.exe.  Run
-CartridgeWriter.exe:</p>
+<p>Plug in the Arduino and wait for it to be recognized by Windows before running
+CartridgeWriter.exe.</p>
 
-<pre><code>-Select the Arduino in the Device dropdown.
+<pre><code>-Run CartridgeWriter.exe
+-Select an Arduino device in the Device dropdown.
 -Select a Printer Type in the Printer Type dropdown.
 -Press the Read button and remaining fields are populated by reading DS2433 chip.
     * Read makes a copy of the DS2433 chip contents to a file.
@@ -83,15 +86,17 @@ CartridgeWriter.exe:</p>
 </code></pre>
 
 <h2>
-<a id="compiling-cartridgewriter" class="anchor" href="#compiling-cartridgewriter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compiling CartridgeWriter</h2>
+<a id="compiling-cartridge-writer" class="anchor" href="#compiling-cartridge-writer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compiling Cartridge Writer</h2>
 
 <p>Cartridge Writer was written and compiled using Microsoft Visual Studio Express 2013
 for Windows Desktop.  Given that that Express is the base flavor of Visual Studio
 this code should compile with any other flavor of Visual Studio 2013 that can compile
 c# desktop applications.  This has not been tested with any other versions of Visual
 Studio, but if anyone tries compiling with a different version let me know what
-happens and I can post the results here.
-    -Visual Studio 2013</p>
+happens and I can post the results here.</p>
+
+<pre><code>-Visual Studio 2013
+</code></pre>
       </section>
     </div>
 
