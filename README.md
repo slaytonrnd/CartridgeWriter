@@ -15,7 +15,6 @@ click operation.
 Running CartridgeWriter.exe
 ----
 Set up the following before running:
-
 	-32 or 64 bit PC with Windows XP or later (Only tested on XP and 7 so far)
 	-At least .Net Framework 4.0
 	-Arduino configured as shown at https://github.com/meawoppl/eepromTool-ds2433
@@ -36,7 +35,6 @@ Set up the following before running:
 CartridgeWriter.exe is located in the Release directory.  Plug in the Arduino and
 wait for it to be recognized by Windows before running CartridgeWriter.exe.  Run
 CartridgeWriter.exe:
-
 	-Select the Arduino in the Device dropdown.
 	-Select a Printer Type in the Printer Type dropdown.
 	-Press the Read button and remaining fields are populated by reading DS2433 chip.
