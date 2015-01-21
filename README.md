@@ -2,7 +2,7 @@ Cartridge Writer
 ================
 
 Cartridge Writer is a Windows program that can use an Arduino to read / write a
-DS2433 chip from StrataSys printer cartridges.
+DS2433 chip from Stratasys printer cartridges.
 
 The code base is written in c# and consists of ports of Benjamin
 Vanheuverzwijn's stratasys code located at:
