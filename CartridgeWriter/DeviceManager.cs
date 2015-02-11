@@ -38,7 +38,6 @@ namespace CartridgeWriter
     {
         private struct device
         {
-            public string DeviceID;
             public string Name;
         }
 
@@ -57,7 +56,7 @@ namespace CartridgeWriter
             byte[] rom = null;
             byte[] flash = null;
 
-            using (SerialPort sp = new SerialPort(devices.Where(d => d.Name.Equals(name)).Select(d => d.DeviceID).First(), 9600))
+            using (SerialPort sp = new SerialPort(ParseComPortName(devices.Where(d => d.Name.Equals(name)).Select(d => d.Name).First()), 9600))
             {
                 sp.ReadTimeout = 3000;
                 sp.Parity = Parity.None;
@@ -95,7 +94,7 @@ namespace CartridgeWriter
         {
             byte[] result = null;
 
-            using (SerialPort sp = new SerialPort(devices.Where(d => d.Name.Equals(name)).Select(d => d.DeviceID).First(), 9600))
+            using (SerialPort sp = new SerialPort(ParseComPortName(devices.Where(d => d.Name.Equals(name)).Select(d => d.Name).First()), 9600))
             {
                 sp.ReadTimeout = 3000;
                 sp.Parity = Parity.None;
@@ -122,7 +121,7 @@ namespace CartridgeWriter
 
         private void LoadDevices()
         {
-            SelectQuery q = new SelectQuery("Win32_SerialPort");
+            SelectQuery q = new SelectQuery("Win32_PNPEntity", "Name LIKE '%(COM%)%'");
 
             using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(q))
             {
@@ -130,7 +129,7 @@ namespace CartridgeWriter
                 {
                     foreach (ManagementObject mo in moc)
                     {
-                        devices.Add(new device { DeviceID = mo["DeviceID"].ToString(), Name = mo["Name"].ToString() });
+                        devices.Add(new device { Name = mo["Name"].ToString() });
                     }
                 }
             }
@@ -202,6 +201,7 @@ namespace CartridgeWriter
             return result;
         }
 
+        // Create a file of the DS2433 chip contents.
         private void SaveFlashToFile(byte[] rom, byte[] flash)
         {
             string path = @".\EEPROMFiles";
@@ -226,5 +226,21 @@ namespace CartridgeWriter
             }
         }
 
+        // Get the name of the com port.
+        private string ParseComPortName(string deviceName)
+        {
+            string comPortName = string.Empty;
+
+            if (String.IsNullOrEmpty(deviceName))
+                return comPortName;
+
+            int startIndex = deviceName.IndexOf("(") + 1;
+            int length = deviceName.IndexOf(")") - startIndex;
+
+            if (startIndex > 0 && length > 0)
+                comPortName = deviceName.Substring(startIndex, length);
+
+            return comPortName;
+        }
     }
 }
