@@ -24,6 +24,8 @@
 using CartridgeWriterExtensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Configuration;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
@@ -36,6 +38,9 @@ namespace CartridgeWriter
 {
     public class DeviceManager
     {
+        private int baudRate = 9600;
+        private int serialInitializationWait = 3000;
+        
         private struct device
         {
             public string Name;
@@ -48,7 +53,11 @@ namespace CartridgeWriter
             get { return devices.Select(d => d.Name); }
         }
 
-        public DeviceManager() { LoadDevices(); }
+        public DeviceManager()
+        {
+            LoadApplicationSettings();
+            LoadDevices();
+        }
 
         public Cartridge ReadCartridge(string name, Machine machine)
         {
@@ -56,7 +65,7 @@ namespace CartridgeWriter
             byte[] rom = null;
             byte[] flash = null;
 
-            using (SerialPort sp = new SerialPort(ParseComPortName(devices.Where(d => d.Name.Equals(name)).Select(d => d.Name).First()), 9600))
+            using (SerialPort sp = new SerialPort(ParseComPortName(devices.Where(d => d.Name.Equals(name)).Select(d => d.Name).First()), baudRate))
             {
                 sp.ReadTimeout = 3000;
                 sp.Parity = Parity.None;
@@ -65,11 +74,8 @@ namespace CartridgeWriter
                 sp.Handshake = Handshake.None;
                 sp.DtrEnable = true;
 
-
                 if (!sp.IsOpen)
                     sp.Open();
-
-                sp.DiscardInBuffer();
 
                 WaitForChip(sp);
 
@@ -94,7 +100,7 @@ namespace CartridgeWriter
         {
             byte[] result = null;
 
-            using (SerialPort sp = new SerialPort(ParseComPortName(devices.Where(d => d.Name.Equals(name)).Select(d => d.Name).First()), 9600))
+            using (SerialPort sp = new SerialPort(ParseComPortName(devices.Where(d => d.Name.Equals(name)).Select(d => d.Name).First()), baudRate))
             {
                 sp.ReadTimeout = 3000;
                 sp.Parity = Parity.None;
@@ -103,11 +109,8 @@ namespace CartridgeWriter
                 sp.Handshake = Handshake.None;
                 sp.DtrEnable = true;
 
-
                 if (!sp.IsOpen)
                     sp.Open();
-
-                sp.DiscardInBuffer();
 
                 WaitForChip(sp);
 
@@ -180,6 +183,10 @@ namespace CartridgeWriter
 
         private void WaitForChip(SerialPort sp)
         {
+            Thread.Sleep(serialInitializationWait);
+
+            sp.DiscardInBuffer();
+
             while (!PollForChip(sp))
                 Thread.Sleep(500);
 
@@ -224,6 +231,21 @@ namespace CartridgeWriter
                 fs.Flush();
                 fs.Close();
             }
+        }
+
+        // Get the application settings and load them.
+        private void LoadApplicationSettings()
+        {
+            int br;
+            int siw;
+            NameValueCollection appSettings = ConfigurationManager.AppSettings;
+
+            if (appSettings.Count == 0) return;
+
+            if (appSettings["BaudRate"] != null && int.TryParse(appSettings["BaudRate"], out br)) baudRate = br;
+
+            if (appSettings["SerialInitializationWait"] != null
+                && int.TryParse(appSettings["SerialInitializationWait"], out siw)) serialInitializationWait = siw;
         }
 
         // Get the name of the com port.
