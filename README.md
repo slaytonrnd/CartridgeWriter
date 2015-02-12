@@ -39,6 +39,9 @@ Set up the following before running:
 Plug in the Arduino and wait for it to be recognized by Windows before running
 CartridgeWriter.exe.
 
+	-Modify values in CartridgeWriter.exe.config if necessary (see note below).
+		* BaudRate: Default value is 9600 
+		* SerialInitializationWait: Default value is 2000 (Wait for Serial Port to Open) 
 	-Run CartridgeWriter.exe
 	-Select an Arduino device in the Device dropdown.
 	-Select a Printer Type in the Printer Type dropdown.
@@ -49,14 +52,23 @@ CartridgeWriter.exe.
 	-Make changes in "Change Cartridge Values To" column.
 	-Press the Write button to write changes to DS2433 chip.
 
+Note on CartridgeWriter.exe.config values:
+The default values selected are very conservative, but may not work in all cases.
+Kulitorum reported being able to push the BaudRate to 115200 on an Arduino Mega
+1280 (See Issues #3 & #4), but I haven't tried anything but 9600 on my Arduino Micro.
+Kulitorum also reported needing to set the SerialInitializationWait very high (3000)
+for the Arduino Mega 1280, but with the Arduino Micro no wait is needed at all.
+If CartridgeWriter appears to hang when trying to read try setting the
+SerialInitializationWait value higher.
+
 Compiling Cartridge Writer
 ----
 Cartridge Writer was written and compiled using Microsoft Visual Studio Express 2013
-for Windows Desktop.  Given that that Express is the base flavor of Visual Studio
-this code should compile with any other flavor of Visual Studio 2013 that can compile
-c# desktop applications.  This has not been tested with any other versions of Visual
-Studio, but if anyone tries compiling with a different version let me know what
-happens and I can post the results here.
+for Windows Desktop Update 4.  Given that that Express is the base flavor of Visual
+Studio this code should compile with any other flavor of Visual Studio 2013 that can
+compile c# desktop applications.  This has not been tested with any other versions
+of Visual Studio, but if anyone tries compiling with a different version let me know
+what happens and I can post the results here.
 
 	-Visual Studio 2013
 	
