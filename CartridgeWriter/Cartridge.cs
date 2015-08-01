@@ -291,14 +291,14 @@ namespace CartridgeWriter
             _key[3] = (byte)(~_keyFragment[6] & 0xff);
             _key[4] = (byte)(~machine_number[0] & 0xff);
             _key[5] = (byte)(~machine_number[2] & 0xff);
-            _key[6] = (byte)(~_eepromUID[2] & 0xff);
+            _key[6] = (byte)(~_eepromUID[1] & 0xff);
             _key[7] = (byte)(~machine_number[6] & 0xff);
             _key[8] = (byte)(~machine_number[7] & 0xff);
             _key[9] = (byte)(~_eepromUID[6] & 0xff);
             _key[10] = (byte)(~machine_number[3] & 0xff);
             _key[11] = (byte)(~machine_number[1] & 0xff);
             _key[12] = (byte)(~_keyFragment[7] & 0xff);
-            _key[13] = (byte)(~_eepromUID[1] & 0xff);
+            _key[13] = (byte)(~_eepromUID[2] & 0xff);
             _key[14] = (byte)(~_keyFragment[3] & 0xff);
             _key[15] = (byte)(~_keyFragment[1] & 0xff);
 
