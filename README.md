@@ -1,6 +1,16 @@
 Cartridge Writer
 ================
 
+Note:	I have not had time to work on this repository in over a year, it has not
+	been updated with the latest code from https://github.com/bvanheu/stratasys
+	and does not appear to work with uprint cartridges.  I am hesitant to give
+	a timeline on when I will update the repository, since I am not sure when I
+	will get a chance to work on it.  For now if you have a uprint please see
+	Vanheuverzwijn's stratasys code located at:
+		https://github.com/bvanheu/stratasys
+	And Matthew Goodman's eepromTool-ds2433 code from:
+		https://github.com/meawoppl/eepromTool-ds2433
+
 Cartridge Writer is a Windows program that can use an Arduino to read / write a
 DS2433 chip from Stratasys printer cartridges.
 
