@@ -138,7 +138,7 @@ namespace CartridgeWriter
                 c.UseDate = DateTime.ParseExact(txtLastUseDateChangeTo.Text, "yyyy-MM-dd HH:mm:ss", null);
 
             if (!txtInitialQuantityCurrent.Text.Equals(txtInitialQuantityChangeTo.Text))
-                c.InitialMaterialQuantity = double.Parse(txtSerialNumberChangeTo.Text);
+                c.InitialMaterialQuantity = double.Parse(txtInitialQuantityChangeTo.Text);
 
             if (!txtCurrentQuantityCurrent.Text.Equals(txtCurrentQuantityChangeTo.Text))
                 c.CurrentMaterialQuantity = double.Parse(txtCurrentQuantityChangeTo.Text);
