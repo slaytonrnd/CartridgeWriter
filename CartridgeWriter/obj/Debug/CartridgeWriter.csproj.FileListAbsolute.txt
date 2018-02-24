@@ -1,0 +1,138 @@
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\obj\Debug\CartridgeWriter.baml
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\obj\Debug\CartridgeWriter.g.cs
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\obj\Debug\App.g.cs
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\obj\Debug\CartridgeWriter_MarkupCompile.cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\obj\Debug\CartridgeWriter.g.resources
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\obj\Debug\CartridgeWriter.Properties.Resources.resources
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\obj\Debug\CartridgeWriter.csproj.GenerateResource.Cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\bin\Debug\CartridgeWriter.exe.config
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\bin\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\bin\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\obj\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\obj\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter-74361848f8149bee6d6412bbef1b8bc0682bd3dd\CartridgeWriter\obj\Debug\CartridgeWriter.csprojResolveAssemblyReference.cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\bin\Debug\CartridgeWriter.exe.config
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\obj\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\obj\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\bin\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\bin\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\obj\Debug\CartridgeWriter.csprojResolveAssemblyReference.cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\obj\Debug\CartridgeWriter.baml
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\obj\Debug\CartridgeWriter.g.cs
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\obj\Debug\App.g.cs
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\obj\Debug\CartridgeWriter_MarkupCompile.cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\obj\Debug\CartridgeWriter.g.resources
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\obj\Debug\CartridgeWriter.Properties.Resources.resources
+C:\Users\Mayr-T\Desktop\CartridgeWriter\CartridgeWriter\obj\Debug\CartridgeWriter.csproj.GenerateResource.Cache
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\bin\Debug\CartridgeWriter.exe.config
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\obj\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\obj\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\obj\Debug\CartridgeWriter.csprojResolveAssemblyReference.cache
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\obj\Debug\CartridgeWriter.baml
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\obj\Debug\CartridgeWriter.g.cs
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\obj\Debug\App.g.cs
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\obj\Debug\CartridgeWriter_MarkupCompile.cache
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\obj\Debug\CartridgeWriter.g.resources
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\obj\Debug\CartridgeWriter.Properties.Resources.resources
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\obj\Debug\CartridgeWriter.csproj.GenerateResource.Cache
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\bin\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text\CartridgeWriter\bin\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.exe.config
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.csprojResolveAssemblyReference.cache
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.baml
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.g.cs
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\App.g.cs
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter_MarkupCompile.cache
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.g.resources
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.Properties.Resources.resources
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.csproj.GenerateResource.Cache
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\strati prog\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.pdb
+D:\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.exe.config
+D:\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.exe
+D:\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.pdb
+D:\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.exe
+D:\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.pdb
+D:\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.csprojResolveAssemblyReference.cache
+D:\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.baml
+D:\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.g.cs
+D:\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\App.g.cs
+D:\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter_MarkupCompile.cache
+D:\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.g.resources
+D:\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.Properties.Resources.resources
+D:\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.csproj.GenerateResource.Cache
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.exe.config
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.csprojResolveAssemblyReference.cache
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.baml
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.g.cs
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\App.g.cs
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter_MarkupCompile.cache
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.g.resources
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.Properties.Resources.resources
+C:\Users\Mayr-T\Desktop\Programme 3D Drucker\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.csproj.GenerateResource.Cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.exe.config
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.csprojResolveAssemblyReference.cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.baml
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.g.cs
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\App.g.cs
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter_MarkupCompile.cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.g.resources
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.Properties.Resources.resources
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.csproj.GenerateResource.Cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.exe.config
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.exe
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\bin\Debug\CartridgeWriter.pdb
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.csprojResolveAssemblyReference.cache
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.baml
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.g.cs
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\App.g.cs
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter_MarkupCompile.cache
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.g.resources
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.Properties.Resources.resources
+C:\Users\Mayr-T\Desktop\strati resetter\CartridgeWriter_text_kurz\CartridgeWriter\obj\Debug\CartridgeWriter.csproj.GenerateResource.Cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\bin\Debug\CartridgeWriter for uPrint.exe.config
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\bin\Debug\CartridgeWriter for uPrint.exe.manifest
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\bin\Debug\CartridgeWriter for uPrint.application
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\bin\Debug\CartridgeWriter for uPrint.exe
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\bin\Debug\CartridgeWriter for uPrint.pdb
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter.baml
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter.g.cs
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\App.g.cs
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint_MarkupCompile.cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint.g.resources
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter.Properties.Resources.resources
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter.csproj.GenerateResource.Cache
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint.exe.manifest
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint.application
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint.exe
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint.pdb
+C:\Users\Mayr-T\Desktop\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter.csprojResolveAssemblyReference.cache
+E:\CartridgeWriter_uPrint\CartridgeWriter\bin\Debug\CartridgeWriter for uPrint.exe.config
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint.exe
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint.pdb
+E:\CartridgeWriter_uPrint\CartridgeWriter\bin\Debug\CartridgeWriter for uPrint.exe.manifest
+E:\CartridgeWriter_uPrint\CartridgeWriter\bin\Debug\CartridgeWriter for uPrint.application
+E:\CartridgeWriter_uPrint\CartridgeWriter\bin\Debug\CartridgeWriter for uPrint.exe
+E:\CartridgeWriter_uPrint\CartridgeWriter\bin\Debug\CartridgeWriter for uPrint.pdb
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter.csprojResolveAssemblyReference.cache
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter.baml
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter.g.cs
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\App.g.cs
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint_MarkupCompile.cache
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint.g.resources
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter.Properties.Resources.resources
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter.csproj.GenerateResource.Cache
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint.exe.manifest
+E:\CartridgeWriter_uPrint\CartridgeWriter\obj\Debug\CartridgeWriter for uPrint.application

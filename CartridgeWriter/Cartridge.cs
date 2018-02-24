@@ -61,8 +61,8 @@ namespace CartridgeWriter
     //       16 0x48: 0x10 - ^
     public class Cartridge
     {
-        private byte[] _encrypted = null;
-        private byte[] _decrypted = new byte[512];
+        public byte[] _encrypted = null;
+        private byte[] _decrypted = new byte[128];
         private Machine _machine = null;
         private byte[] _eepromUID = null;
         private byte[] _key = new byte[16];
@@ -98,6 +98,8 @@ namespace CartridgeWriter
         
         // EEPROMUID
         public byte[] EEPROMUID { get { return _eepromUID; } }
+
+        
 
         // Serial number
         public double SerialNumber
@@ -159,26 +161,26 @@ namespace CartridgeWriter
             }
             set
             {
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Year)), 0, _decrypted, 0x28, 2);
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Month)), 0, _decrypted, 0x2a, 1);
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Day)), 0, _decrypted, 0x2b, 1);
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Hour)), 0, _decrypted, 0x2c, 1);
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Minute)), 0, _decrypted, 0x2d, 1);
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Second)), 0, _decrypted, 0x2e, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Year)), 0, _decrypted, 0x30, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Month)), 0, _decrypted, 0x32, 1);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Day)), 0, _decrypted, 0x33, 1);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Hour)), 0, _decrypted, 0x34, 1);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Minute)), 0, _decrypted, 0x35, 1);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Second)), 0, _decrypted, 0x36, 2);
             }
         }
 
-        // Initial material quantity, in cubic feet
+        // Initial material quantity, in cubic inches
         public double InitialMaterialQuantity
         {
-            get { return BitConverter.ToDouble(_decrypted, 0x38); }
+            get { return 16.3871*BitConverter.ToDouble(_decrypted, 0x38); }
             set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, _decrypted, 0x38, 8); }
         }
 
         // Remaining material quantity
         public double CurrentMaterialQuantity
         {
-            get { return BitConverter.ToDouble(_decrypted, 0x58); }
+            get { return 16.3871*BitConverter.ToDouble(_decrypted, 0x58); }
             set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, _decrypted, 0x58, 8); }
         }
 
@@ -274,6 +276,7 @@ namespace CartridgeWriter
             if (!Crc16_Checksum.Checksum(currentMaterialQuantityDecrypted).SequenceEqual(_currentMaterialQuantityCRC))
                 throw new Exception("invalid current material quantity checksum");
         }
+
 
         //
         // Build a key used to encrypt/decrypt a cartridge
