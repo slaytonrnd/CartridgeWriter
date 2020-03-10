@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
@@ -33,182 +34,35 @@ using System.Management;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace CartridgeWriter
 {
     public class DeviceManager
     {
-        private int baudRate = 9600;
-        private int serialInitializationWait = 3000;
-        
-        private struct device
-        {
-            public string Name;
-        }
+        byte[] flash;
+        byte[] rom;
 
-        private IList<device> devices = new List<device>();
-
-        public IEnumerable<string> Devices
-        {
-            get { return devices.Select(d => d.Name); }
-        }
-
-        public DeviceManager()
-        {
-            LoadApplicationSettings();
-            LoadDevices();
-        }
-
-        public Cartridge ReadCartridge(string name, Machine machine)
+        public Cartridge ReadCartridge(Machine machine)
         {
             Cartridge c = null;
-            byte[] rom = null;
-            byte[] flash = null;
-
-            using (SerialPort sp = new SerialPort(ParseComPortName(devices.Where(d => d.Name.Equals(name)).Select(d => d.Name).First()), baudRate))
             {
-                sp.ReadTimeout = 3000;
-                sp.Parity = Parity.None;
-                sp.StopBits = StopBits.One;
-                sp.DataBits = 8;
-                sp.Handshake = Handshake.None;
-                sp.DtrEnable = true;
-
-                if (!sp.IsOpen)
-                    sp.Open();
-
-                WaitForChip(sp);
-
-                rom = ReadROM(sp);
-
-                flash = ReadFlash(sp);
-
-                sp.Close();
+                rom = ConvertHexStringToByteArray(clear_ID(MainWindow.input_flash));
+                flash = ConvertHexStringToByteArray(clear_code(MainWindow.input_flash));
             }
 
             if (BitConverter.IsLittleEndian)
                 rom = rom.Reverse();
 
-            SaveFlashToFile(rom, flash);
+
+            if(Properties.Settings.Default.Save_to_File)
+                SaveFlashToFile(rom, flash);
 
             c = new Cartridge(flash, machine, rom);
-
             return c;
         }
 
-        public byte[] WriteCartridge(string name, Cartridge c)
-        {
-            byte[] result = null;
-
-            using (SerialPort sp = new SerialPort(ParseComPortName(devices.Where(d => d.Name.Equals(name)).Select(d => d.Name).First()), baudRate))
-            {
-                sp.ReadTimeout = 3000;
-                sp.Parity = Parity.None;
-                sp.StopBits = StopBits.One;
-                sp.DataBits = 8;
-                sp.Handshake = Handshake.None;
-                sp.DtrEnable = true;
-
-                if (!sp.IsOpen)
-                    sp.Open();
-
-                WaitForChip(sp);
-
-                result = WriteFlash(sp, c.Encrypted);
-
-                sp.Close();
-            }
-
-            return result;
-        }
-
-        private void LoadDevices()
-        {
-            SelectQuery q = new SelectQuery("Win32_PNPEntity", "Name LIKE '%(COM%)%'");
-
-            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(q))
-            {
-                using (ManagementObjectCollection moc = searcher.Get())
-                {
-                    foreach (ManagementObject mo in moc)
-                    {
-                        devices.Add(new device { Name = mo["Name"].ToString() });
-                    }
-                }
-            }
-        }
-
-        private bool PollForChip(SerialPort sp)
-        {
-            byte[] buffer = new byte[1];
-            sp.Write("x");
-
-            // Pause for buffer to fill.
-            while (sp.BytesToRead < 1)
-                Thread.Sleep(10);
-
-            sp.Read(buffer, 0, 1);
-            return Encoding.ASCII.GetString(buffer).Equals("p");
-        }
-
-        private byte[] ReadFlash(SerialPort sp)
-        {
-            byte[] buffer = new byte[512];
-
-            sp.DiscardInBuffer();
-
-            sp.Write("f");
-
-            // Pause for buffer to fill.
-            while (sp.BytesToRead < 512)
-                Thread.Sleep(10);
-
-            sp.Read(buffer, 0, 512);
-
-            return buffer;
-        }
-
-        private byte[] ReadROM(SerialPort sp)
-        {
-            byte[] buffer = new byte[8];
-            sp.Write("r");
-
-            // Pause for buffer to fill.
-            while (sp.BytesToRead < 8)
-                Thread.Sleep(10);
-
-            sp.Read(buffer, 0, 8);
-            return buffer;
-        }
-
-        private void WaitForChip(SerialPort sp)
-        {
-            Thread.Sleep(serialInitializationWait);
-
-            sp.DiscardInBuffer();
-
-            while (!PollForChip(sp))
-                Thread.Sleep(500);
-
-            sp.DiscardInBuffer();
-        }
-
-        private byte[] WriteFlash(SerialPort sp, byte[] flash)
-        {
-            byte[] result = new byte[3];
-
-            sp.Write("w");
-            sp.Write(flash, 0, flash.Length);
-
-            //Pause for buffer to fill.
-            while (sp.BytesToRead < 3)
-                Thread.Sleep(10);
-
-            sp.Read(result, 0, 3);
-            return result;
-        }
-
-        // Create a file of the DS2433 chip contents.
+        // Save a file of the DS2433 chip contents
         private void SaveFlashToFile(byte[] rom, byte[] flash)
         {
             string path = @".\EEPROMFiles";
@@ -216,53 +70,55 @@ namespace CartridgeWriter
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            path = path + @"\" + rom.HexString();
+            path = path + @"\" + clear_ID(MainWindow.input_flash).Replace(" ", String.Empty);
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
             DateTime now = DateTime.Now;
+            path = path + @"\" + now.ToString("dd.MM.yyyy_HH.mm.ss") + ".txt";
+            File.WriteAllText(path, MainWindow.input_flash);
 
-            path = path + @"\" + now.ToString("yyyyMMdd.HHmmss") + ".bin";
+        }
 
-            using (FileStream fs = File.Create(path))
+        //convert the hexcode to a byte array, so it is useable for decryption
+        public static byte[] ConvertHexStringToByteArray(string hexString)
+        {
+            hexString = hexString.Replace(" ", String.Empty);
+            byte[] HexAsBytes = new byte[(hexString.Length) / 2];
+            
+            for (int index = 0; index < HexAsBytes.Length; index++)
             {
-                fs.Write(flash, 0, 512);
-                fs.Flush();
-                fs.Close();
+                string byteValue = hexString.Substring(index * 2, 2);
+                HexAsBytes[index] = byte.Parse(byteValue, NumberStyles.HexNumber, CultureInfo.InvariantCulture);
             }
+
+            return HexAsBytes;
+
         }
 
-        // Get the application settings and load them.
-        private void LoadApplicationSettings()
+        //extract the hexcode from the rest of the code sent over the serial port
+        private string clear_code(string uncut)
         {
-            int br;
-            int siw;
-            NameValueCollection appSettings = ConfigurationManager.AppSettings;
+            string[] splittedStrings = uncut.Split(new[] { "000000: " }, StringSplitOptions.None);
+            string Dump = splittedStrings[2];
+            string code = Dump.Substring(0, 48);
+            for (int i = 1; i <= (Dump.Length - 48) / 76; i++)
+            {
+                code = code + Dump.Substring(76 * i, 48);
+            }
 
-            if (appSettings.Count == 0) return;
 
-            if (appSettings["BaudRate"] != null && int.TryParse(appSettings["BaudRate"], out br)) baudRate = br;
-
-            if (appSettings["SerialInitializationWait"] != null
-                && int.TryParse(appSettings["SerialInitializationWait"], out siw)) serialInitializationWait = siw;
+            return code;
         }
 
-        // Get the name of the com port.
-        private string ParseComPortName(string deviceName)
+        //extract the ID from the rest of the code sent over the serial port
+        public static string clear_ID(string uncut)
         {
-            string comPortName = string.Empty;
-
-            if (String.IsNullOrEmpty(deviceName))
-                return comPortName;
-
-            int startIndex = deviceName.IndexOf("(") + 1;
-            int length = deviceName.IndexOf(")") - startIndex;
-
-            if (startIndex > 0 && length > 0)
-                comPortName = deviceName.Substring(startIndex, length);
-
-            return comPortName;
+            string[] splittedStrings = uncut.Split(new[] { "000000: " }, StringSplitOptions.None);
+            string clearcode = splittedStrings[1];
+            string ID = clearcode.Substring(0, 23);
+            return ID;
         }
     }
 }
