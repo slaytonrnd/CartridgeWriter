@@ -177,7 +177,7 @@ namespace CartridgeWriter
         {
             Random zufall = new Random();                            
             int number = zufall.Next(10000000, 99999999);
-            txtSerialNumberChangeTo.Text = number.ToString() + ",0";
+            txtSerialNumberChangeTo.Text = number.ToString("f1");
         }
 
         //Automatically change the current quantity value to the inital quantity value
