@@ -7,9 +7,6 @@ The program is written in C# and consists mostly of the Cartridge Writer program
 https://github.com/slaytonrnd/CartridgeWriter. <br>
 Which is based on the tool from Benjamin Vanheuverzwin: https://github.com/bvanheu/stratasys <br>
 
-Requirement is .NET Framework 4.7.2. <br>
-So it can run under Windows 7 and upwards.
-
 ## Running CartridgeWriter uPrint (SE).exe
 
 CartridgeWriter uPrint (SE).exe can be downloaded as a part of the CartridgeWriter for uPrint repository
@@ -18,7 +15,7 @@ and is located in the Release directory of the repository.
 #### Set up the following before running:
 
 - 32 or 64 bit PC with Windows (Only tested on 7)
-- At least .Net Framework 4.0
+- At least .Net Framework 4.7.2
 - a null modem serial cable
 - for more modern PCs and laptops, which don't have a COM Port, a USB to RS232 adapter
 	
