@@ -39,8 +39,9 @@ namespace CartridgeWriter
         private static readonly IEnumerable<Machine> Machines = new List<Machine>
         {
 			new Machine {Number = new byte[8] {0xF3, 0xA9, 0x1D, 0xBE, 0x6B, 0x0B, 0x22, 0x55}, Type = "uPrint / uPrint Plus"},
-			//new Machine {Number = new byte[8] {0x6B, 0x2A, 0x26, 0x8B, 0x5E, 0xD3, 0x37, 0x4A}, Type = "uprintse"}
+			new Machine {Number = new byte[8] {0x09, 0xFB, 0xD4, 0xB6, 0x1F, 0xC0, 0xB3, 0x27}, Type = "uPrint SE / uPrint SE Plus "}
         };
+
 
         private Machine() { }
 

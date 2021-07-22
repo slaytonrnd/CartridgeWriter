@@ -22,17 +22,5 @@ namespace CartridgeWriter.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Save_to_File {
-            get {
-                return ((bool)(this["Save_to_File"]));
-            }
-            set {
-                this["Save_to_File"] = value;
-            }
-        }
     }
 }

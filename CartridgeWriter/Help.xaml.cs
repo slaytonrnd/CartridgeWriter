@@ -23,30 +23,29 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace CartridgeWriter
 {
-    class Bay
+    /// <summary>
+    /// Interaktionslogik für Help.xaml
+    /// </summary>
+    public partial class HelpWindow : Window
     {
-        private static readonly IList<Bay> bays = new List<Bay>
+        public HelpWindow()
         {
-            new Bay() {code_read = "er 0 0 0 128",code_write = "ew 0 0 0 ", Name="Bay 0 Model Material"},
-            new Bay() {code_read = "er 1 0 0 128",code_write = "ew 1 0 0 ", Name="Bay 0 Support Material"},
-            new Bay() {code_read = "er 0 1 0 128",code_write = "ew 0 1 0 ", Name="Bay 1 Model Material"},
-            new Bay() {code_read = "er 1 1 0 128",code_write = "ew 1 1 0 ", Name="Bay 1 Support Material"},
-
-        };
-
-        private Bay() { }
-
-        public string code_read { get; private set; }
-        public string code_write { get; private set; }
-        public string Name { get; private set; }
-
-        public static Bay FromName(string Name) { return bays.Where(b => b.Name.Equals(Name)).First(); }
-        public static IEnumerable<string> GetAllNames() { return bays.Select(b => b.Name); }
-
+            InitializeComponent();
+        }
     }
 }

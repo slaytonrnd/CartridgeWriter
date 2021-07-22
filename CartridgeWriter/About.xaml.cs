@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2014, David Slayton <slaytonrnd@outlook.com>
+﻿// Copyright (c) 2021, Thomas Mayr <mayr.t@aon.at>
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -15,39 +15,43 @@
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-// DISCLAIMED. IN NO EVENT SHALL <DAVID SLAYTON> BE LIABLE FOR ANY
+// DISCLAIMED. IN NO EVENT SHALL <THOMAS MAYR> BE LIABLE FOR ANY
 // DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 // (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 // LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 // ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
-namespace CartridgeWriterExtensions
+namespace CartridgeWriter
 {
-    public static class ByteExtensions
+    /// <summary>
+    /// Interaktionslogik für Window1.xaml
+    /// </summary>
+    public partial class AboutWindow : Window
     {
-        public static byte[] Reverse(this byte[] bytes)
+        public AboutWindow()
         {
-            int len = bytes.Length;
-            byte[] reversed = new byte[len];
+            InitializeComponent();
 
-            for (int i = 0; i < len; i++)
-                reversed[len - i - 1] = bytes[i];
-
-            return reversed;
+        }
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.Uri.AbsoluteUri);
+            e.Handled = true;
         }
 
-        public static string HexString(this byte[] bytes)
-        {
-            string hexString = string.Empty;
-
-            foreach (byte b in bytes)
-                hexString = hexString + b.ToString("x2");
-
-            return hexString;
-        }
     }
 }

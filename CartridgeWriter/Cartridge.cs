@@ -27,10 +27,8 @@
 
 using CartridgeWriterExtensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
 
 namespace CartridgeWriter
 {
@@ -84,6 +82,7 @@ namespace CartridgeWriter
             BuildKey();
             LoadCRC();
             Decrypt();
+
         }
 
         // Encrypted
@@ -240,41 +239,44 @@ namespace CartridgeWriter
         //
         private void Decrypt()
         {
-            _encrypted.CopyTo(_decrypted, 0);
 
-            //
-            // Content
-            //
-            byte[] contentEncrypted = new byte[0x40];
-            Buffer.BlockCopy(_encrypted, 0, contentEncrypted, 0, 0x40);
+                _encrypted.CopyTo(_decrypted, 0);
 
-            // Validate crypted content checksum
-            if (!Crc16_Checksum.Checksum(contentEncrypted).SequenceEqual(_cryptedContentCRC))
-                throw new Exception("invalid crypted content checksum");
-            // Decrypt content
-            byte[] content = Desx_Crypto.Decrypt(_key, contentEncrypted);
-            Buffer.BlockCopy(content, 0, _decrypted, 0, 0x40);
-            // Validating plaintext checksum
-            if (!Crc16_Checksum.Checksum(content).SequenceEqual(_plainContentCRC))
-                throw new Exception(
-                    "invalid content checksum: should have " + _plainContentCRC.HexString() +
-                    " but have " + Crc16_Checksum.Checksum(content).HexString());
+                //
+                // Content
+                //
+                byte[] contentEncrypted = new byte[0x40];
+                Buffer.BlockCopy(_encrypted, 0, contentEncrypted, 0, 0x40);
 
-            //
-            // Current Material Quantity
-            //
-            byte[] currentMaterialQuantityEncrypted = new byte[8];
-            Buffer.BlockCopy(_encrypted, 0x58, currentMaterialQuantityEncrypted, 0, 8);
+                // Validate crypted content checksum
+                if (!Crc16_Checksum.Checksum(contentEncrypted).SequenceEqual(_cryptedContentCRC))
+                    throw new Exception("invalid crypted content checksum");
+                // Decrypt content
+                byte[] content = Desx_Crypto.Decrypt(_key, contentEncrypted);
+                Buffer.BlockCopy(content, 0, _decrypted, 0, 0x40);
+                // Validating plaintext checksum
+                if (!Crc16_Checksum.Checksum(content).SequenceEqual(_plainContentCRC))
+                    throw new Exception(
+                        "invalid content checksum: should have " + _plainContentCRC.HexString() +
+                        " but have " + Crc16_Checksum.Checksum(content).HexString());
 
-            // Validate crypted current material quantity checksum
-            if (!Crc16_Checksum.Checksum(currentMaterialQuantityEncrypted).SequenceEqual(_currentMaterialQuantityCryptedCRC))
-                throw new Exception("invalid current material quantity checksum");
-            // Decrypt current material quantity
-            byte[] currentMaterialQuantityDecrypted = Desx_Crypto.Decrypt(_key, currentMaterialQuantityEncrypted);
-            Buffer.BlockCopy(currentMaterialQuantityDecrypted, 0, _decrypted, 0x58, 8);
-            // Validating current material quantity checksum
-            if (!Crc16_Checksum.Checksum(currentMaterialQuantityDecrypted).SequenceEqual(_currentMaterialQuantityCRC))
-                throw new Exception("invalid current material quantity checksum");
+                //
+                // Current Material Quantity
+                //
+                byte[] currentMaterialQuantityEncrypted = new byte[8];
+                Buffer.BlockCopy(_encrypted, 0x58, currentMaterialQuantityEncrypted, 0, 8);
+
+                // Validate crypted current material quantity checksum
+                if (!Crc16_Checksum.Checksum(currentMaterialQuantityEncrypted).SequenceEqual(_currentMaterialQuantityCryptedCRC))
+                    throw new Exception("invalid current material quantity checksum");
+                // Decrypt current material quantity
+                byte[] currentMaterialQuantityDecrypted = Desx_Crypto.Decrypt(_key, currentMaterialQuantityEncrypted);
+                Buffer.BlockCopy(currentMaterialQuantityDecrypted, 0, _decrypted, 0x58, 8);
+                // Validating current material quantity checksum
+                if (!Crc16_Checksum.Checksum(currentMaterialQuantityDecrypted).SequenceEqual(_currentMaterialQuantityCRC))
+                    throw new Exception("invalid current material quantity checksum");
+
+            
         }
 
 
