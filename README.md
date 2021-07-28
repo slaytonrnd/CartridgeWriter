@@ -7,6 +7,8 @@ The program is written in C# and consists mostly of the Cartridge Writer program
 https://github.com/slaytonrnd/CartridgeWriter. <br>
 Which is based on the tool from Benjamin Vanheuverzwin: https://github.com/bvanheu/stratasys <br>
 
+Also many thanks to https://github.com/256FF for some help and ideas.
+
 ## Running CartridgeWriter uPrint (SE).exe
 
 CartridgeWriter uPrint (SE).exe can be downloaded as a part of the CartridgeWriter for uPrint repository
