@@ -1,7 +1,7 @@
 # Cartridge Writer for uPrint
 
 Cartridge Writer for uPrint is a Windows program for reading and writing the
-DS2433 chip from the printer cartridges of a Stratasys uPrint, uPrint plus, uPrint SE and uPrint SE plus, by just using a serial cable (or a USB to Serial Adapter).
+DS2433 chip from the printer cartridges of a Stratasys uPrint, uPrint plus, uPrint SE, uPrint SE plus as well as the HP Designjet 3D by just using a serial cable (or a USB to Serial Adapter).
 
 The program is written in C# and consists mostly of the Cartridge Writer program from David Slyton:
 https://github.com/slaytonrnd/CartridgeWriter. <br>
@@ -69,13 +69,20 @@ Then you can unload it and load new in. The eeprom is still resetable.
 The new Version of Cartridge Writer was edited and compiled in Microsoft Visual Studio 2015 with .NET Framework 4.7.2. .
 
 
-## Updates on 22.07.2020:
+## Updates on 22.07.2021
 
 - Added uPrint SE compatibility. (Not tested by myself yet.)
 - Fixed a bug with the decimal separator of the serial number.
 - Added some Error handling when the wrong settings are chosen.
 - Added an About and a Help Window.
 - Improved the Workflow and cleaned up the code.
+
+## Updates on 23.10.2021
+
+- Fixed a bug that caused an error when decoding the raw hex code from the received string over serial
+- Adding support for materials that are not in the material list (It seems like the nearly identical HP Designjet 3D uses some different weird material-IDs).
+- Added two material-IDs for the HP Designjet 3D
+
 
 # Important Note:
 
