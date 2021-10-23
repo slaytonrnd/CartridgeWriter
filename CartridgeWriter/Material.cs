@@ -28,6 +28,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace CartridgeWriter
 {
@@ -37,7 +38,7 @@ namespace CartridgeWriter
     //
     public class Material
     {
-        private static readonly IList<Material> materials = new List<Material>
+        private static List<Material> materials = new List<Material>
             {
                 new Material() {Id=0x00,Name="ABS"},
                 new Material() {Id=0x01,Name="ABS_RED"},
@@ -169,8 +170,14 @@ namespace CartridgeWriter
         public double Id { get; private set; }
         public string Name { get; private set; }
 
-        public static Material FromId(double id) { return materials.Where(m => m.Id.Equals(id)).First(); }
+        public static Material FromId(double id) {
+            if (materials.Where(m => m.Id.Equals(id)).FirstOrDefault() == null)
+            {
+               materials.Add(new Material() { Id = id, Name = "other: \"0x" + ((int)id).ToString("x") + "\""});
+            }
+            return materials.Where(m => m.Id.Equals(id)).FirstOrDefault();
+        }
         public static Material FromName(string name) { return materials.Where(m => m.Name.Equals(name)).First(); }
-        public static IEnumerable<string> GetAllNames() { return materials.Select(m => m.Name); }
+        public static IEnumerable<string> GetAllNames() {return materials.Select(m => m.Name); }
     }
 }

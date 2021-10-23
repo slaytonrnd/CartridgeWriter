@@ -206,6 +206,7 @@ namespace CartridgeWriter
             txtSerialNumberCurrent.Text = c.SerialNumber.ToString("f1");
             txtSerialNumberChangeTo.Text = txtSerialNumberCurrent.Text;
             cboMaterialCurrent.Text = c.Material.Name;
+            cboMaterialChangeTo.ItemsSource = Material.GetAllNames();
             cboMaterialChangeTo.Text = cboMaterialCurrent.Text;
             txtManufacturingLotCurrent.Text = c.ManufacturingLot;
             txtManufacturingLotChangeTo.Text = txtManufacturingLotCurrent.Text;
@@ -240,6 +241,7 @@ namespace CartridgeWriter
 
             if (!cboMaterialCurrent.Text.Equals(cboMaterialChangeTo.Text))
                 c.Material = Material.FromName(cboMaterialChangeTo.Text);
+
 
             if (!txtManufacturingLotCurrent.Text.Equals(txtManufacturingLotChangeTo.Text))
                 c.ManufacturingLot = txtManufacturingLotChangeTo.Text;
