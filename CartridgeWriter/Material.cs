@@ -162,7 +162,9 @@ namespace CartridgeWriter
 				new Material() {Id=0x11c,Name="P430XL_GRN"},
 				new Material() {Id=0x11d,Name="P430XL_BLK"},
 				new Material() {Id=0x11e,Name="P430XL_YEL"},
-				new Material() {Id=0x11f,Name="P430XL_BLU"}
+                new Material() {Id=0x11f,Name="P430XL_BLU"},
+                new Material() {Id=0xd3,Name="SR30L (HP)"}, //For HP Designjet 3D
+                new Material() {Id=0xe3,Name="ABS_DGRY (HP)"} //For HP Designjet 3D
             };
 
         private Material() { }
