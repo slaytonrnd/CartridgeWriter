@@ -184,7 +184,7 @@ namespace CartridgeWriter
                 try
                 {
                     rom = flashstring.ExtractEepromID().ToByteArray();
-                    flash = flashstring.ExraxtEepromCode().ToByteArray();
+                    flash = flashstring.ExtractEepromCode().ToByteArray();
                 }
                 catch
                 {

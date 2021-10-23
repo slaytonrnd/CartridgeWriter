@@ -28,6 +28,8 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace CartridgeWriterExtensions
 {
@@ -75,18 +77,20 @@ namespace CartridgeWriterExtensions
         }
 
         /* extract the hexcode of the eerprom content from the rest of the string sent over the serial port */
-        public static string ExraxtEepromCode(this string uncut)
+        public static string ExtractEepromCode(this string uncut)
         {
-            string[] splittedStrings = uncut.Split('\r');
-            string code = "";
-            for (int i = 4; i < 12; i++) code += splittedStrings[i].Substring(8, 48);
-            return code;
+            string[] arr = Regex.Matches(uncut, @"0{3}\d{3}:((\s\w{2}){16})")
+                            .Cast<Match>()
+                            .Select(m => m.Groups[1].Value)
+                            .ToArray();
+
+            return string.Join("", arr);
         }
 
         /* extract the hexcode of the ID of the eeprom from the rest of the string sent over the serial port */
         public static string ExtractEepromID(this string uncut)
         {
-            return uncut.Split('\r')[1].Substring(8, 24);
+            return Regex.Match(uncut, @"0{3}\d{3}:((\s\w{2}){8})").Groups[1].Value;
         }
     }
 }
