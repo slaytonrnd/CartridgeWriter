@@ -164,9 +164,9 @@ namespace CartridgeWriter
             txtKeyFragment.Text = c.KeyFragment;
             txtSerialNumberCurrent.Text = c.SerialNumber.ToString("f1");
             txtSerialNumberChangeTo.Text = txtSerialNumberCurrent.Text;
-            cboMaterialCurrent.Text = c.Material.Name;
+            cboMaterialCurrent.SelectedItem = c.Material.Name;
             cboMaterialChangeTo.ItemsSource = Material.GetAllNames(); //Reload the Materials, if an unknown Material was added to the list.
-            cboMaterialChangeTo.Text = cboMaterialCurrent.Text;
+            cboMaterialChangeTo.SelectedItem = cboMaterialCurrent.Text;
             txtManufacturingLotCurrent.Text = c.ManufacturingLot;
             txtManufacturingLotChangeTo.Text = txtManufacturingLotCurrent.Text;
             txtManufacturingDateCurrent.Text = c.ManfuacturingDate.ToString("dd'-'MM'-'yyyy - HH':'mm':'ss");
