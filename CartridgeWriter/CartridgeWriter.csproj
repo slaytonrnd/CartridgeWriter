@@ -115,11 +115,13 @@
     <Compile Include="Cartridge.cs" />
     <Compile Include="Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Machine.cs" />
     <Compile Include="About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SerialControl.cs" />
     <Compile Include="XOR.cs" />
     <Page Include="CartridgeWriter.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -138,6 +140,7 @@
     <Page Include="Help.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
   <ItemGroup>

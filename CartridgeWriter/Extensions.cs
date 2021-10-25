@@ -1,4 +1,4 @@
-﻿// Some methods, which are needed for the uPrint (SE) version, werer added by Thomas Mayr.
+﻿// Some methods, which are needed for the uPrint (SE) version, were added by Thomas Mayr.
 // Class was originally created by David Slayton (copyrigth below)
 
 // Copyright (c) 2014, David Slayton <slaytonrnd@outlook.com>
@@ -33,7 +33,7 @@ using System.Text.RegularExpressions;
 
 namespace CartridgeWriterExtensions
 {
-    public static class ByteExtensions
+    public static class Extensions
     {
         public static byte[] Reverse(this byte[] bytes)
         {

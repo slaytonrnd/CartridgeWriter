@@ -31,7 +31,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.IO.Ports;
-using System.IO;
 
 
 namespace CartridgeWriter
@@ -39,7 +38,6 @@ namespace CartridgeWriter
     public partial class MainWindow : Window
     {
         private Cartridge c = null;
-        private SerialPort serialPort; // serial port for communcating
 
         AboutWindow aboutWindow;
         HelpWindow helpWindow;
@@ -56,7 +54,7 @@ namespace CartridgeWriter
             cboDevices.ItemsSource = SerialPort.GetPortNames();
         }
 
-        //Read out the hexcode over the serial port
+        /* Read out the raw hexcode over the serial port */
         public void cmdReadSerial_Click(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrEmpty(cboDevices.Text) || String.IsNullOrEmpty(cboBays.Text))
@@ -64,25 +62,19 @@ namespace CartridgeWriter
                 MessageBox.Show("A Serial Port and a Cartridge must be selected!");
                 return;
             }
+
             try
             {
-                InitComInterface(cboDevices.Text);
-                serialPort.DiscardInBuffer();
-                serialPort.Write(Bay.FromName(cboBays.Text).code_read);
-                serialPort.Write("\r\n");
-                System.Threading.Thread.Sleep(2000);
-                txtRecevedCode.Text = serialPort.ReadExisting();
-                if (String.IsNullOrEmpty(txtRecevedCode.Text)) MessageBox.Show("Nothing received! Make sure the printer is connected.", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtRecevedCode.Text = SerialControl.readSerial(cboDevices.Text, Bay.FromName(cboBays.Text));
             }
 
             catch (Exception ex)
             {
                 Error_Output(ex.Message);
             }
-            serialPort.Close();
         }
 
-        //decrypt hexcode from the cartridge to get real values
+        /* Decrypt hexcode from the cartridge and fill the forms with the real values. */
         private void cmdRead_Click(object sender, RoutedEventArgs e)
         {
             string input_flash = txtRecevedCode.Text;
@@ -101,7 +93,7 @@ namespace CartridgeWriter
 
             try
             {
-                c = ReadCartridge(Machine.FromType(cboPrinterType.Text), input_flash);
+                c = SerialControl.ReadCartridge(Machine.FromType(cboPrinterType.Text), input_flash,( chbxBackup.IsChecked ?? false ));
             }
             catch (Exception ex)
             {
@@ -111,7 +103,6 @@ namespace CartridgeWriter
             if (c == null) return;
             LoadControls();
             DisableInputs(true);
-
         }
 
         /* Generate a random number as new serial number */
@@ -131,7 +122,7 @@ namespace CartridgeWriter
             clear_all_entries();
         }
 
-        //Create and Write the new hexcode
+        /* Create and Write the new hexcode */
         private void cmdWrite_Click(object sender, RoutedEventArgs e)
         {
             if (c == null)
@@ -150,52 +141,20 @@ namespace CartridgeWriter
             LoadControls();
             try
             {
-                string newflash = Bay.FromName(cboBays.Text).code_write + c.Encrypted.CreateOutput();
-                InitComInterface(cboDevices.Text);
-                serialPort.DiscardInBuffer();
-                serialPort.Write(newflash);
-                serialPort.Write("\r\n");
-                serialPort.Close();
-                System.Threading.Thread.Sleep(2000);
-                MessageBox.Show("Please check if it worked, by removing and reinserting the cartridge!", "Finished!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                clear_all_entries();
+
+                SerialControl.writeSerial(cboDevices.Text, Bay.FromName(cboBays.Text), c);
             }
             catch (Exception ex)
             {
                 Error_Output(ex.Message);
             }
+            clear_all_entries();
         }
 
-
-
-        /*Automatically change the current quantity value to the inital quantity value*/
+        /* Automatically change the current quantity value to the inital quantity value */
         private void txtInitialQuantityChangeTo_TextChanged(object sender, TextChangedEventArgs e)
         {
             txtCurrentQuantityChangeTo.Text = txtInitialQuantityChangeTo.Text;
-        }
-
-        public Cartridge ReadCartridge(Machine machine, string flashstring)
-        {
-            byte[] flash; // Content of the eeprom 
-            byte[] rom; // ID of the eeprom
-
-            Cartridge c = null;
-            {
-                try
-                {
-                    rom = flashstring.ExtractEepromID().ToByteArray();
-                    flash = flashstring.ExtractEepromCode().ToByteArray();
-                }
-                catch
-                {
-                    throw new Exception("Input not the right Form");
-                }
-            }
-
-            if (BitConverter.IsLittleEndian) rom = rom.Reverse();
-            if (chbxBackup.IsChecked ?? false) SaveFlashToFile(flashstring);
-            c = new Cartridge(flash, machine, rom);
-            return c;
         }
 
         /* Sets the text to the textboxes */
@@ -206,7 +165,7 @@ namespace CartridgeWriter
             txtSerialNumberCurrent.Text = c.SerialNumber.ToString("f1");
             txtSerialNumberChangeTo.Text = txtSerialNumberCurrent.Text;
             cboMaterialCurrent.Text = c.Material.Name;
-            cboMaterialChangeTo.ItemsSource = Material.GetAllNames();
+            cboMaterialChangeTo.ItemsSource = Material.GetAllNames(); //Reload the Materials, if an unknown Material was added to the list.
             cboMaterialChangeTo.Text = cboMaterialCurrent.Text;
             txtManufacturingLotCurrent.Text = c.ManufacturingLot;
             txtManufacturingLotChangeTo.Text = txtManufacturingLotCurrent.Text;
@@ -324,32 +283,6 @@ namespace CartridgeWriter
             }
         }
 
-        /* Initialise the Serial Interface */
-        public void InitComInterface(string port)
-        {
-                serialPort = new SerialPort(port);
-                serialPort.BaudRate = 38400;
-                serialPort.Parity = Parity.None;
-                serialPort.StopBits = StopBits.One;
-                serialPort.DataBits = 8;
-                serialPort.Handshake = Handshake.RequestToSend;
-                serialPort.DtrEnable = true;
-                serialPort.WriteTimeout = 500;
-                serialPort.Open();
-        }
-
-
-        /* Save a file of the DS2433 chip contents */
-        private void SaveFlashToFile(string input_flash)
-        {
-            string path = @".\EEPROMFiles";
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            path = path + @"\" + input_flash.ExtractEepromID().Replace(" ", String.Empty);
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            DateTime now = DateTime.Now;
-            path = path + @"\" + now.ToString("dd.MM.yyyy_HH.mm.ss") + ".txt";
-            File.WriteAllText(path, input_flash);
-        }
     }
 
 }
