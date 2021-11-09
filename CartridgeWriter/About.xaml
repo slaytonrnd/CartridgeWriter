@@ -1,4 +1,4 @@
-﻿<!-- Copyright (c) 2021, Thomas Mayr <slaytonrnd@outlook.com>
+﻿<!-- Copyright (c) 2021, Thomas Mayr
      All rights reserved.
 
      Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@
     <Grid x:Name="GrdAbout">
         <StackPanel Margin="0,0,0,10">
 
-            <TextBlock x:Name="txtCreatedBy" Margin="10,10,0,0"><Run FontSize="14" Text="Created by:"/><LineBreak/><Run FontWeight="Bold" FontSize="14" Text="Thomas Mayr"/><LineBreak/><Hyperlink NavigateUri="https://github.com/mayrthom/CartridgeWriter_uPrint"><Run FontSize="14" Text="https://github.com/mayrthom/CartridgeWriter_uPrint"/></Hyperlink><Run Text=" "/><Run/><LineBreak/><LineBreak/><Run Text="Based on:"/><LineBreak/><Run Text="Cartridge Writer of David Slayton"/><LineBreak/><Hyperlink NavigateUri="https://github.com/slaytonrnd/CartridgeWriter"><Run Text="https://github.com/slaytonrnd/CartridgeWriter"/></Hyperlink><LineBreak/><LineBreak/><Run Text="Based on:"/><LineBreak/><Run Text="Stratatools of Benjamin Vanheuverzwijn"/><LineBreak/><Hyperlink NavigateUri="https://github.com/bvanheu/stratatools"><Run Text="https://github.com/bvanheu/stratatools"/></Hyperlink></TextBlock>
+            <TextBlock x:Name="txtCreatedBy" Margin="10,10,0,0"><Run FontSize="14" Text="Created by:"/><LineBreak/><Run FontWeight="Bold" FontSize="14" Text="Thomas Mayr"/><LineBreak/><Hyperlink NavigateUri="https://github.com/mayrthom/CartridgeWriter_uPrint" RequestNavigate="Hyperlink_RequestNavigate"><Run FontSize="14" Text="https://github.com/mayrthom/CartridgeWriter_uPrint" /></Hyperlink><Run Text=" "/><Run/><LineBreak/><LineBreak/><Run Text="Based on:"/><LineBreak/><Run Text="Cartridge Writer of David Slayton"/><LineBreak/><Hyperlink NavigateUri="https://github.com/slaytonrnd/CartridgeWriter" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="https://github.com/slaytonrnd/CartridgeWriter"/></Hyperlink><LineBreak/><LineBreak/><Run Text="Based on:"/><LineBreak/><Run Text="Stratatools of Benjamin Vanheuverzwijn"/><LineBreak/><Hyperlink NavigateUri="https://github.com/bvanheu/stratatools" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="https://github.com/bvanheu/stratatools"/></Hyperlink></TextBlock>
             <Label x:Name="lblLicence">
                 <Label x:Name="label" Content="Licence:" Margin="0,10,0,0"/>
             </Label>

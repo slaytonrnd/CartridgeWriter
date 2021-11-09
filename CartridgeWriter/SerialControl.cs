@@ -86,16 +86,16 @@ namespace CartridgeWriter
             {
                 rom = flashstring.ExtractEepromID().ToByteArray();
                 flash = flashstring.ExtractEepromCode().ToByteArray();
+            
+                if (BitConverter.IsLittleEndian) rom = rom.Reverse();
+                if (save) SaveFlashToFile(flashstring);
+                Cartridge c = new Cartridge(flash, machine, rom);
+                return c;
             }
             catch
             {
                 throw new Exception("Input not the right Form");
             }
-            
-            if (BitConverter.IsLittleEndian) rom = rom.Reverse();
-            if (save) SaveFlashToFile(flashstring);
-            Cartridge c = new Cartridge(flash, machine, rom);
-            return c;
         }
 
         /* Save a file of the DS2433 chip contents */
