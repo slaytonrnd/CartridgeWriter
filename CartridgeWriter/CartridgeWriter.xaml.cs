@@ -136,6 +136,13 @@ namespace CartridgeWriter
                 MessageBox.Show("A Serial Port and a Cartridge must be selected!");
                 return;
             }
+            if (txtSerialNumberCurrent.Text == txtSerialNumberChangeTo.Text)
+            {
+                MessageBoxResult msr = MessageBox.Show("Current Serial Number and new Serial Number are the same. The printer may not accept the cartridge.\nAre you sure to continue?", "Serial Number not changed", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+                 if (msr == MessageBoxResult.Cancel)
+                      return;
+
+            }
 
             UpdateCartridge();
             LoadControls();
@@ -286,4 +293,3 @@ namespace CartridgeWriter
     }
 
 }
-
