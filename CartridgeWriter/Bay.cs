@@ -1,6 +1,4 @@
-﻿// Ported from machine.py by David Slayton (2014); copyright below.
-
-// Copyright (c) 2013, Benjamin Vanheuverzwijn <bvanheu@gmail.com>
+﻿// Copyright (c) 2021, Thomas Mayr <mayr.t@aon.at>
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -17,7 +15,7 @@
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-// DISCLAIMED. IN NO EVENT SHALL <BENJAMIN VANHEUVERZWIJN> BE LIABLE FOR ANY
+// DISCLAIMED. IN NO EVENT SHALL <THOMAS MAYR> BE LIABLE FOR ANY
 // DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 // (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 // LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -25,31 +23,30 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CartridgeWriter
 {
-    //
-    // A machine is a printer from stratasys
-    //
-    public class Machine
+    class Bay
     {
-        private static readonly IEnumerable<Machine> Machines = new List<Machine>
+        private static readonly IList<Bay> bays = new List<Bay>
         {
-			new Machine {Number = new byte[8] {0xF3, 0xA9, 0x1D, 0xBE, 0x6B, 0x0B, 0x22, 0x55}, Type = "uPrint / uPrint Plus"},
-			new Machine {Number = new byte[8] {0x09, 0xFB, 0xD4, 0xB6, 0x1F, 0xC0, 0xB3, 0x27}, Type = "uPrint SE / uPrint SE Plus "}
+            new Bay() {code_read = "er 0 0 0 128",code_write = "ew 0 0 0 ", Name="Bay 0 Model Material"},
+            new Bay() {code_read = "er 1 0 0 128",code_write = "ew 1 0 0 ", Name="Bay 0 Support Material"},
+            new Bay() {code_read = "er 0 1 0 128",code_write = "ew 0 1 0 ", Name="Bay 1 Model Material"},
+            new Bay() {code_read = "er 1 1 0 128",code_write = "ew 1 1 0 ", Name="Bay 1 Support Material"},
+
         };
 
+        private Bay() { }
 
-        private Machine() { }
+        public string code_read { get; private set; }
+        public string code_write { get; private set; }
+        public string Name { get; private set; }
 
-        public string Type { get; private set; }
-        public byte[] Number { get; private set; }
+        public static Bay FromName(string Name) { return bays.Where(b => b.Name.Equals(Name)).First(); }
+        public static IEnumerable<string> GetAllNames() { return bays.Select(b => b.Name); }
 
-        public static Machine FromType(string type) { return Machines.Where(m => m.Type.Equals(type)).First(); }
-        public static Machine FromNumber(byte[] number) { return Machines.Where(m => m.Number.SequenceEqual(number)).First(); }
-        public static IEnumerable<string> GetAllTypes() { return Machines.Select(m => m.Type); }
     }
 }

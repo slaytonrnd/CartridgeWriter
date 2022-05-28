@@ -1,4 +1,5 @@
-﻿<!-- Copyright (c) 2014, David Slayton <slaytonrnd@outlook.com>
+﻿<!-- The Program was edited by Thomas Mayr (2021) to work fo the uPrint series; copyright below
+     Copyright (c) 2014, David Slayton <slaytonrnd@outlook.com>
      All rights reserved.
 
      Redistribution and use in source and binary forms, with or without
@@ -23,76 +24,120 @@
      (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
      SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  -->
 
-            <Window x:Name="frmCartridgeWriter" x:Class="CartridgeWriter.MainWindow"
+<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Cartridge Writer" Height="435" Width="715" ResizeMode="CanMinimize">
-    <StackPanel x:Name="stkPnlCartridgeWriter" Margin="0,10,0,0">
-        <Grid x:Name="grdHeader" Margin="0,0,5,0" Height="58" VerticalAlignment="Top">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Name="frmCartridgeWriter" x:Class="CartridgeWriter.MainWindow"
+        Title="Cartridge Writer for uPrint (Plus) / SE" ResizeMode="CanMinimize" Width="580" Height="630" WindowStyle="ThreeDBorderWindow">
+    <StackPanel x:Name="stkPnlCartridgeWriter" Margin="0,0,0,0" RenderTransformOrigin="0,0">
+        <Grid x:Name="grdHeader" Margin="0,10,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="205*"/>
-                <ColumnDefinition Width="100*"/>
-                <ColumnDefinition Width="60*"/>
-                <ColumnDefinition Width="130*"/>
-                <ColumnDefinition Width="130*"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="lblDevice" Content="Device:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="57" Height="26" Margin="15,0,0,0"/>
-            <ComboBox x:Name="cboDevice" Margin="15,26,10,0" VerticalAlignment="Top" ToolTip="Select the device which will read and write the DS2433.&#x0a;If the Device list is empty plug in the device first and then restart Cartridge Writer." Height="22" SelectionChanged="cboDevice_SelectionChanged"/>
-            <Label x:Name="lblPrinterType" Content="Printer Type:" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="76"/>
-            <ComboBox x:Name="cboPrinterType" Margin="5,26,10,0" VerticalAlignment="Top" ToolTip="Select the type of printer in which the cartridge is used." Grid.Column="1" Height="22" SelectionChanged="cboPrinterType_SelectionChanged"/>
-            <Button x:Name="cmdRead" Content="Read" Margin="5,26,10,0" VerticalAlignment="Top" ToolTip="Press to read the printer cartrige data from the DS2433 chip." Grid.Column="2" Height="22" Click="cmdRead_Click"/>
-            <Label x:Name="lblEEPROMUID" Content="EEPROM UID:" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Grid.Column="3" Height="26" Width="82"/>
-            <TextBox x:Name="txtEEPROMUID" Height="23" Margin="5,26,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Column="3"/>
-            <Label x:Name="lblKeyFragment" Content="Key Fragment:" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Grid.Column="4" Height="26" Width="86"/>
-            <TextBox x:Name="txtKeyFragment" Height="23" Margin="5,26,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Column="4"/>
+
+            <StackPanel Margin="0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <StackPanel Margin="10,0,0,0">
+                        <Label x:Name="lblDevices" Content="Device" HorizontalAlignment="Left" Height="26" Margin="0" VerticalAlignment="Top"/>
+                        <ComboBox x:Name="cboDevices" HorizontalAlignment="Left" Height="22" Margin="0" VerticalAlignment="Top" Width="65" IsReadOnly="True" ToolTip="Select the Serial Port to which the Printer is connected." Padding="5,3,0,3"/>
+                    </StackPanel>
+                    <StackPanel Margin="10,0,0,0">
+                        <Label x:Name="lblBay" Content="Cartridge" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top"/>
+                        <ComboBox x:Name="cboBays" HorizontalAlignment="Left" Width="150" VerticalAlignment="Top" ToolTip="Select the Bay in which the Spool is located." Height="22" Padding="5,3,0,3"/>
+                    </StackPanel>
+                    <Button x:Name="cmdReadSerial" Content="Read Serial" Height="22" VerticalAlignment="Bottom" Click="cmdReadSerial_Click" ToolTip="Click to read the Hex Content of the Chip in the Cartrige." HorizontalAlignment="Left" Margin="10,0,0,0" VerticalContentAlignment="Stretch" Padding="5,1"/>
+                    <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="135,0,0,0" Height="44" >
+                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" ToolTip="If this is checked, every time a cartridge is succesfull decrypted, the content of the EEPROM is stored locally in the directory of this program.">
+                            <CheckBox x:Name="chbxBackup" VerticalAlignment="Center" />
+                            <Label x:Name="lblBackup" Content="save content&#xD;&#xA;of EEPROM" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0" HorizontalAlignment="Left">
+                    <StackPanel VerticalAlignment="Top" Margin="10,0,0,0">
+                        <Label x:Name="lblPrinterType" Content="Printer Type" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="76"/>
+                        <ComboBox x:Name="cboPrinterType" VerticalAlignment="Top" ToolTip="Select the type of printer in which the cartridge is used." Height="22" HorizontalAlignment="Left" Width="130"/>
+                    </StackPanel>
+                    <Button x:Name="cmdRead" Content="Decrypt"  VerticalAlignment="Bottom" ToolTip="Press to decrypt the printers cartrige data from the Hex Code of the chip." Height="22" Click="cmdRead_Click" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="10,0,0,0" Width="70"/>
+
+                    <StackPanel Margin="10,0,0,0">
+                        <Label x:Name="lblEEPROMUID" Content="EEPROM UID" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="84"/>
+                        <TextBox x:Name="txtEEPROMUID" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" HorizontalAlignment="Left" Width="150"/>
+                    </StackPanel>
+                    <StackPanel Margin="10,0">
+                        <Label x:Name="lblKeyFragment" Content="Key Fragment" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="86" />
+                        <TextBox x:Name="txtKeyFragment" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" HorizontalAlignment="Left" Width="160" Padding="0"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
         </Grid>
-        <Grid x:Name="grdCartridgeValuesHeaderLabels" Margin="150,0,10,0" Height="26" VerticalAlignment="Top">
+
+        <Grid x:Name="grdCartridgeValues" Margin="10,10,0,0" HorizontalAlignment="Left" Width="540">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="140*"/>
-                <ColumnDefinition Width="200*"/>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="200*"/>
+                <ColumnDefinition Width="136*" IsEnabled="False"/>
+                <ColumnDefinition Width="153*" IsEnabled="False"/>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="153*"/>
+                <ColumnDefinition Width="80*"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="lblCurrentCartridgeValues" Content="Current Cartridge Values:" VerticalAlignment="Top" HorizontalContentAlignment="Center" Grid.Column="1" Height="26"/>
-            <Label x:Name="lblChangeCartridgeValuesTo" Content="Change Cartridge Values To:" Grid.Column="2" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="26" Grid.ColumnSpan="2"/>
+
+            <Label x:Name="lblCurrentCartridgeValues" Content="Current Cartridge Values" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="26" HorizontalAlignment="Left" Width="143" Grid.ColumnSpan="2" Grid.Column="1" Margin="0,0,0,10"/>
+            <Label x:Name="lblChangeCartridgeValuesTo" Content="Change Cartridge Values To" Grid.Column="3" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="26" Width="161" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="0"/>
+            <Border BorderThickness="1" BorderBrush="Gray" CornerRadius="5" Grid.Column="1" Grid.Row="1" Padding="0" Margin="0,-10,0,0"/>
+            <Border BorderThickness="1" BorderBrush="Gray" CornerRadius="5" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="265" VerticalAlignment="Bottom" Margin="0"/>
+            <Label x:Name="lblSerialNumber" Content="Serial Number:" Margin="10,0,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26"/>
+            <TextBox x:Name="txtSerialNumberCurrent" Grid.Column="1" Margin="10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Height="23" Grid.Row="1"/>
+            <TextBox x:Name="txtSerialNumberChangeTo" Grid.Column="3" Margin="10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23" Grid.Row="1" ToolTip="The Serial number of the chip"/>
+            <Label x:Name="lblMaterial" Content="Material:" Margin="10,28,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26"/>
+            <ComboBox x:Name="cboMaterialCurrent" Grid.Column="1" Margin="10,28,10,0" VerticalAlignment="Top" IsEditable="True" IsEnabled="False" Grid.Row="1" Height="22"/>
+            <ComboBox x:Name="cboMaterialChangeTo" Grid.Column="3" Margin="10,28,10,0" VerticalAlignment="Top" Grid.Row="1" ToolTip="The Material which is stored on the cartridge." Height="22"/>
+            <Label x:Name="lblManufacturingLot" Content="Manufacturing Lot:" Margin="10,55,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26"/>
+            <TextBox x:Name="txtManufacturingLotCurrent" Grid.Column="1" Margin="10,55,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23" IsEnabled="False" Grid.Row="1"/>
+            <TextBox x:Name="txtManufacturingLotChangeTo" Grid.Column="3" Margin="10,55,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23" Grid.Row="1"/>
+            <Label x:Name="lblManufacturingDate" Content="Manufacturing Date:" Margin="10,83,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26"/>
+            <TextBox x:Name="txtManufacturingDateCurrent" Grid.Column="1" Height="23" Margin="10,83,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Row="1"/>
+            <TextBox x:Name="txtManufacturingDateChangeTo" Grid.Column="3" Height="23" Margin="10,83,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1"/>
+            <Label x:Name="lblLastUseDate" Content="Last Use Date:" Margin="10,111,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26"/>
+            <TextBox x:Name="txtLastUseDateCurrent" Grid.Column="1" Height="23" Margin="10,111,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Row="1"/>
+            <TextBox x:Name="txtLastUseDateChangeTo" Grid.Column="3" Height="23" Margin="10,111,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1"/>
+            <Label x:Name="lblInitialQuantity" Content="Initial Quantity:" Margin="10,139,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26"/>
+            <TextBox x:Name="txtInitialQuantityCurrent" Grid.Column="1" Height="23" Margin="10,139,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Row="1"/>
+            <TextBox x:Name="txtInitialQuantityChangeTo" Grid.Column="3" Height="23" Margin="10,139,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" TextChanged="txtInitialQuantityChangeTo_TextChanged"/>
+            <Label x:Name="lblCurrentQuantity" Content="Current Quantity:" Margin="10,170,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26"/>
+            <TextBox x:Name="txtCurrentQuantityCurrent" Grid.Column="1" Height="23" Margin="9,167,11,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Row="1"/>
+            <TextBox x:Name="txtCurrentQuantityChangeTo" Grid.Column="3" Height="23" Margin="10,167,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1"/>
+            <Label x:Name="lblVersion" Content="Version:" Margin="10,195,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26"/>
+            <TextBox x:Name="txtVersionCurrent" Grid.Column="1" Height="23" Margin="10,195,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Row="1"/>
+            <TextBox x:Name="txtVersionChangeTo" Grid.Column="3" Height="23" Margin="10,195,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1"/>
+            <Label x:Name="lblSignature" Content="Signature:" Margin="10,223,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26"/>
+            <TextBox x:Name="txtSignatureCurrent" Grid.Column="1" Height="23" Margin="10,223,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Row="1"/>
+            <TextBox x:Name="txtSignatureChangeTo" Grid.Column="3" Height="23" Margin="10,223,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1"/>
+            <Button x:Name="cmdGenerate" Content="Generate" Margin="0,0,10,233" Click="cmdGenerate_Click" ToolTip="Click to create a new serial number randomly, because all used serial numbers are stored in the printer." Grid.Column="4" Grid.Row="1" Padding="5,1"/>
         </Grid>
-        <Grid x:Name="grdCartridgeValues" Margin="150,0,10,0" Height="265" VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="140*" IsEnabled="False"/>
-                <ColumnDefinition Width="200*" IsEnabled="False"/>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="200*"/>
-            </Grid.ColumnDefinitions>
-            <Border BorderThickness="1" BorderBrush="#FF707070" CornerRadius="5" Grid.Column="1"></Border>
-            <Border BorderThickness="1" BorderBrush="#FF707070" CornerRadius="5" Grid.Column="3"></Border>
-            <Label x:Name="lblSerialNumber" Content="Serial Number:" Margin="10,10,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtSerialNumberCurrent" Grid.Column="1" Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Height="23"/>
-            <TextBox x:Name="txtSerialNumberChangeTo" Grid.Column="3" Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23"/>
-            <Label x:Name="lblMaterial" Content="Material:" Margin="10,38,0,0" VerticalAlignment="Top"/>
-            <ComboBox x:Name="cboMaterialCurrent" Grid.Column="1" Margin="10,38,10,0" VerticalAlignment="Top" IsEditable="True" IsEnabled="False"/>
-            <ComboBox x:Name="cboMaterialChangeTo" Grid.Column="3" Margin="10,38,10,0" VerticalAlignment="Top"/>
-            <Label x:Name="lblManufacturingLot" Content="Manufacturing Lot:" Margin="10,65,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtManufacturingLotCurrent" Grid.Column="1" Margin="10,65,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23" IsEnabled="False"/>
-            <TextBox x:Name="txtManufacturingLotChangeTo" Grid.Column="3" Margin="10,65,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23"/>
-            <Label x:Name="lblManufacturingDate" Content="Manufacturing Date:" Margin="10,93,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtManufacturingDateCurrent" Grid.Column="1" Height="23" Margin="10,93,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"/>
-            <TextBox x:Name="txtManufacturingDateChangeTo" Grid.Column="3" Height="23" Margin="10,93,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <Label x:Name="lblLastUseDate" Content="Last Use Date:" Margin="10,121,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtLastUseDateCurrent" Grid.Column="1" Height="23" Margin="10,121,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"/>
-            <TextBox x:Name="txtLastUseDateChangeTo" Grid.Column="3" Height="23" Margin="10,121,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <Label x:Name="lblInitialQuantity" Content="Initial Quantity:" Margin="10,149,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtInitialQuantityCurrent" Grid.Column="1" Height="23" Margin="10,149,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"/>
-            <TextBox x:Name="txtInitialQuantityChangeTo" Grid.Column="3" Height="23" Margin="10,149,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <Label x:Name="lblCurrentQuantity" Content="Current Quantity:" Margin="10,180,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtCurrentQuantityCurrent" Grid.Column="1" Height="23" Margin="10,177,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"/>
-            <TextBox x:Name="txtCurrentQuantityChangeTo" Grid.Column="3" Height="23" Margin="10,177,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <Label x:Name="lblVersion" Content="Version:" Margin="10,205,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtVersionCurrent" Grid.Column="1" Height="23" Margin="10,205,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"/>
-            <TextBox x:Name="txtVersionChangeTo" Grid.Column="3" Height="23" Margin="10,205,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <Label x:Name="lblSignature" Content="Signature:" Margin="10,233,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtSignatureCurrent" Grid.Column="1" Height="23" Margin="10,233,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"/>
-            <TextBox x:Name="txtSignatureChangeTo" Grid.Column="3" Height="23" Margin="10,233,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Grid x:Name="grdBtm" Margin="0,0,0,10" VerticalAlignment="Bottom">
+            <StackPanel Margin="0,0,0,10">
+                <Label x:Name="lblReceivedCode" Content="received Hex-Code" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" Width="114" VerticalAlignment="Top"/>
+                <TextBox x:Name="txtRecevedCode" Height="85" Margin="10,0,0,0" TextWrapping="Wrap" Width="540" HorizontalAlignment="Left" ToolTip="Received code from the printer."/>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+
+                        <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="10,0,0,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Button x:Name="btnAbout" Content="About" Margin="5" Click="credits_Click" Padding="5,0" FontSize="10"/>
+                                <Button x:Name="btnHelp" Content="Help" Margin="5" Click="help_Click" Height="22" Padding="5,0" ToolTip="Show some instructions." FontSize="10"/>
+                            </StackPanel>
+                        </Border>
+                    <Button x:Name="btnRestart" Content="Restart" Height="23" Margin="332,0,0,0" Click="cmdRestart_Click" ToolTip="Clear all entries and restart the program." Padding="5,1" HorizontalAlignment="Left" Width="50" VerticalAlignment="Center"/>
+                    <Button x:Name="btnWrite" Content="Write" Height="23" Margin="10,0,0,0" Click="cmdWrite_Click" ToolTip="Click to write the new Code to the Printer (and the Chip)." Padding="5,1" HorizontalAlignment="Left" Width="50" VerticalAlignment="Center"/>
+
+                </StackPanel>
+            </StackPanel>
+            
+
         </Grid>
-        <Button x:Name="cmdWrite" Content="Write" HorizontalAlignment="Left" Width="80" Margin="560,8,0,0" ToolTip="Press to write the 'Change Cartridge Values To' data to the DS2433 chip." Click="cmdWrite_Click"/>
     </StackPanel>
 </Window>

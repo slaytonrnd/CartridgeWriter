@@ -1,4 +1,7 @@
-﻿// Copyright (c) 2014, David Slayton <slaytonrnd@outlook.com>
+﻿// Some methods, which are needed for the uPrint (SE) version, were added by Thomas Mayr.
+// Class was originally created by David Slayton (copyrigth below)
+
+// Copyright (c) 2014, David Slayton <slaytonrnd@outlook.com>
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -24,10 +27,13 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using System;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace CartridgeWriterExtensions
 {
-    public static class ByteExtensions
+    public static class Extensions
     {
         public static byte[] Reverse(this byte[] bytes)
         {
@@ -43,11 +49,48 @@ namespace CartridgeWriterExtensions
         public static string HexString(this byte[] bytes)
         {
             string hexString = string.Empty;
-
             foreach (byte b in bytes)
                 hexString = hexString + b.ToString("x2");
-
             return hexString;
+        }
+
+
+        /*Methods needed for the uPrint Version: */
+
+        /* convert the hexcode to a byte array, so it is useable for decryption*/
+        public static byte[] ToByteArray(this string hexString)
+        {
+            hexString = hexString.Replace(" ", String.Empty);
+            byte[] HexAsBytes = new byte[(hexString.Length) / 2];
+            for (int index = 0; index < HexAsBytes.Length; index++)
+            {
+                string byteValue = hexString.Substring(index * 2, 2);
+                HexAsBytes[index] = byte.Parse(byteValue, NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+            }
+            return HexAsBytes;
+        }
+
+        /* Creating the output string in the correct form to write it back over the serialport to the chip */
+        public static string CreateOutput(this byte[] output_flash)
+        {
+            return "\"" + BitConverter.ToString(output_flash).Replace("-", ",") + "\"";
+        }
+
+        /* extract the hexcode of the eerprom content from the rest of the string sent over the serial port */
+        public static string ExtractEepromCode(this string uncut)
+        {
+            string[] arr = Regex.Matches(uncut, @"0{3}\d{3}:((\s\w{2}){16})")
+                            .Cast<Match>()
+                            .Select(m => m.Groups[1].Value)
+                            .ToArray();
+
+            return string.Join("", arr);
+        }
+
+        /* extract the hexcode of the ID of the eeprom from the rest of the string sent over the serial port */
+        public static string ExtractEepromID(this string uncut)
+        {
+            return Regex.Match(uncut, @"0{3}\d{3}:((\s\w{2}){8})").Groups[1].Value;
         }
     }
 }

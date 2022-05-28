@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2014, David Slayton <slaytonrnd@outlook.com>
+﻿// Edited by Thomas Mayr (2021) to work fo the uPrint series; copyright below.
+
+// Copyright (c) 2014, David Slayton <slaytonrnd@outlook.com>
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -25,101 +27,179 @@
 
 using CartridgeWriterExtensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO.Ports;
+
 
 namespace CartridgeWriter
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private DeviceManager dm = new DeviceManager();
         private Cartridge c = null;
+
+        AboutWindow aboutWindow;
+        HelpWindow helpWindow;
 
         public MainWindow()
         {
             InitializeComponent();
-
-            cboDevice.ItemsSource = dm.Devices;
+            txtRecevedCode.AcceptsReturn = true;
+            txtRecevedCode.IsReadOnly = false;
             cboPrinterType.ItemsSource = Machine.GetAllTypes();
             cboMaterialCurrent.ItemsSource = Material.GetAllNames();
             cboMaterialChangeTo.ItemsSource = Material.GetAllNames();
+            cboBays.ItemsSource = Bay.GetAllNames();
+            cboDevices.ItemsSource = SerialPort.GetPortNames();
         }
 
-        private void cmdRead_Click(object sender, RoutedEventArgs e)
+        /* Read out the raw hexcode over the serial port */
+        public void cmdReadSerial_Click(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrEmpty(cboDevice.Text) || String.IsNullOrEmpty(cboPrinterType.Text))
+            if (String.IsNullOrEmpty(cboDevices.Text) || String.IsNullOrEmpty(cboBays.Text))
             {
-                MessageBox.Show("I need a Device and Printer Type before I can read.");
+                MessageBox.Show("A Serial Port and a Cartridge must be selected!");
                 return;
             }
-                
 
-            c = dm.ReadCartridge(cboDevice.Text, Machine.FromType(cboPrinterType.Text));
+            try
+            {
+                txtRecevedCode.Text = SerialControl.readSerial(cboDevices.Text, Bay.FromName(cboBays.Text));
+            }
 
-            if (c == null)
-                return;
-
-            LoadControls();
+            catch (Exception ex)
+            {
+                Error_Output(ex.Message);
+            }
         }
 
+        /* Decrypt hexcode from the cartridge and fill the forms with the real values. */
+        private void cmdRead_Click(object sender, RoutedEventArgs e)
+        {
+            string input_flash = txtRecevedCode.Text;
+
+            if (String.IsNullOrEmpty(cboPrinterType.Text))
+            {
+                MessageBox.Show("A Printer Type is needed before the data can be decrypted.");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(txtRecevedCode.Text))
+            {
+                MessageBox.Show("There is nothing to decrypt.\nMake sure to receive data before to try to decrypt.");
+                return;
+            }
+
+            try
+            {
+                c = SerialControl.ReadCartridge(Machine.FromType(cboPrinterType.Text), input_flash,( chbxBackup.IsChecked ?? false ));
+            }
+            catch (Exception ex)
+            {
+                Error_Output(ex.Message);
+                return;
+            }
+            if (c == null) return;
+            LoadControls();
+            DisableInputs(true);
+        }
+
+        /* Generate a random number as new serial number */
+        private void cmdGenerate_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtSerialNumberCurrent.Text != String.Empty)
+            {
+                Random zufall = new Random();
+                int number = zufall.Next(10000000, 99999999);
+                txtSerialNumberChangeTo.Text = number.ToString("f1");
+            }
+        }
+
+        /* Clear all entries and restart the program  */
+        private void cmdRestart_Click(object sender, RoutedEventArgs e)
+        {
+            clear_all_entries();
+        }
+
+        /* Create and Write the new hexcode */
         private void cmdWrite_Click(object sender, RoutedEventArgs e)
         {
             if (c == null)
             {
-                MessageBox.Show("I need to Read before I can Write.");
+                MessageBox.Show("The data must be read and decrypted before it can be written.");
                 return;
             }
-                
+
+            if (String.IsNullOrEmpty(cboBays.Text) | String.IsNullOrEmpty(cboDevices.Text))
+            {
+                MessageBox.Show("A Serial Port and a Cartridge must be selected!");
+                return;
+            }
+            if (txtSerialNumberCurrent.Text == txtSerialNumberChangeTo.Text)
+            {
+                MessageBoxResult msr = MessageBox.Show("Current Serial Number and new Serial Number are the same. The printer may not accept the cartridge.\nAre you sure to continue?", "Serial Number not changed", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+                 if (msr == MessageBoxResult.Cancel)
+                      return;
+
+            }
 
             UpdateCartridge();
-
-            // Write the cartridge.
-            byte[] result = new byte[3];
-            result = dm.WriteCartridge(cboDevice.Text, c);
-
             LoadControls();
+            try
+            {
+
+                SerialControl.writeSerial(cboDevices.Text, Bay.FromName(cboBays.Text), c);
+            }
+            catch (Exception ex)
+            {
+                Error_Output(ex.Message);
+            }
+            clear_all_entries();
         }
 
+        /* Automatically change the current quantity value to the inital quantity value */
+        private void txtInitialQuantityChangeTo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            txtCurrentQuantityChangeTo.Text = txtInitialQuantityChangeTo.Text;
+        }
+
+        /* Sets the text to the textboxes */
         private void LoadControls()
         {
-            txtEEPROMUID.Text = c.EEPROMUID.HexString();
+            txtEEPROMUID.Text = c.EEPROMUID.Reverse().HexString();
             txtKeyFragment.Text = c.KeyFragment;
             txtSerialNumberCurrent.Text = c.SerialNumber.ToString("f1");
             txtSerialNumberChangeTo.Text = txtSerialNumberCurrent.Text;
-            cboMaterialCurrent.Text = c.Material.Name;
-            cboMaterialChangeTo.Text = cboMaterialCurrent.Text;
+            cboMaterialCurrent.SelectedItem = c.Material.Name;
+            cboMaterialChangeTo.ItemsSource = Material.GetAllNames(); //Reload the Materials, if an unknown Material was added to the list.
+            cboMaterialChangeTo.SelectedItem = cboMaterialCurrent.Text;
             txtManufacturingLotCurrent.Text = c.ManufacturingLot;
             txtManufacturingLotChangeTo.Text = txtManufacturingLotCurrent.Text;
-            txtManufacturingDateCurrent.Text = c.ManfuacturingDate.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+            txtManufacturingDateCurrent.Text = c.ManfuacturingDate.ToString("dd'-'MM'-'yyyy - HH':'mm':'ss");
             txtManufacturingDateChangeTo.Text = txtManufacturingDateCurrent.Text;
-            txtLastUseDateCurrent.Text = c.UseDate.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+            txtLastUseDateCurrent.Text = c.UseDate.ToString("dd'-'MM'-'yyyy - HH':'mm':'ss");
             txtLastUseDateChangeTo.Text = txtLastUseDateCurrent.Text;
             txtInitialQuantityCurrent.Text = c.InitialMaterialQuantity.ToString();
             txtInitialQuantityChangeTo.Text = txtInitialQuantityCurrent.Text;
             txtCurrentQuantityCurrent.Text = c.CurrentMaterialQuantity.ToString();
-            txtCurrentQuantityChangeTo.Text = txtCurrentQuantityCurrent.Text;
+            txtCurrentQuantityChangeTo.Text = c.InitialMaterialQuantity.ToString();
             txtVersionCurrent.Text = c.Version.ToString();
             txtVersionChangeTo.Text = txtVersionCurrent.Text;
             txtSignatureCurrent.Text = c.Signature;
             txtSignatureChangeTo.Text = txtSignatureCurrent.Text;
         }
 
-        /// <summary>
-        /// Update any changed Cartridge properties.
-        /// </summary>
+        private void DisableInputs(Boolean disable)
+        {
+            cboDevices.IsEnabled = !disable;
+            cboBays.IsEnabled = !disable;
+            cboPrinterType.IsEnabled = !disable;
+            cmdReadSerial.IsEnabled = !disable;
+        }
+
+
+        /* Update any changed Cartridge properties. */
         private void UpdateCartridge()
         {
             if (!txtSerialNumberCurrent.Text.Equals(txtSerialNumberChangeTo.Text))
@@ -127,6 +207,7 @@ namespace CartridgeWriter
 
             if (!cboMaterialCurrent.Text.Equals(cboMaterialChangeTo.Text))
                 c.Material = Material.FromName(cboMaterialChangeTo.Text);
+
 
             if (!txtManufacturingLotCurrent.Text.Equals(txtManufacturingLotChangeTo.Text))
                 c.ManufacturingLot = txtManufacturingLotChangeTo.Text;
@@ -138,10 +219,10 @@ namespace CartridgeWriter
                 c.UseDate = DateTime.ParseExact(txtLastUseDateChangeTo.Text, "yyyy-MM-dd HH:mm:ss", null);
 
             if (!txtInitialQuantityCurrent.Text.Equals(txtInitialQuantityChangeTo.Text))
-                c.InitialMaterialQuantity = double.Parse(txtInitialQuantityChangeTo.Text);
+                c.InitialMaterialQuantity = double.Parse(txtInitialQuantityChangeTo.Text) / 16.3871;
 
             if (!txtCurrentQuantityCurrent.Text.Equals(txtCurrentQuantityChangeTo.Text))
-                c.CurrentMaterialQuantity = double.Parse(txtCurrentQuantityChangeTo.Text);
+                c.CurrentMaterialQuantity = double.Parse(txtCurrentQuantityChangeTo.Text) / 16.3871;
 
             if (!txtVersionCurrent.Text.Equals(txtVersionChangeTo.Text))
                 c.Version = ushort.Parse(txtVersionChangeTo.Text);
@@ -150,32 +231,65 @@ namespace CartridgeWriter
                 c.Signature = txtSignatureChangeTo.Text;
         }
 
-        private void cboDevice_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /* clears all entries */
+        private void clear_all_entries()
         {
-            //SetEnable();
+            c = null;
+            cboBays.Text = null;
+            cboDevices.Text = null;
+            cboPrinterType.Text = null;
+            txtEEPROMUID.Text = null;
+            txtKeyFragment.Text = null;
+            txtSerialNumberCurrent.Text = null;
+            txtSerialNumberChangeTo.Text = null;
+            cboMaterialCurrent.Text = null;
+            cboMaterialChangeTo.Text = null;
+            txtManufacturingLotCurrent.Text = null;
+            txtManufacturingLotChangeTo.Text = null;
+            txtManufacturingDateCurrent.Text = null;
+            txtManufacturingDateChangeTo.Text = null;
+            txtLastUseDateCurrent.Text = null;
+            txtLastUseDateChangeTo.Text = null;
+            txtInitialQuantityCurrent.Text = null;
+            txtInitialQuantityChangeTo.Text = null;
+            txtCurrentQuantityCurrent.Text = null;
+            txtCurrentQuantityChangeTo.Text = null;
+            txtVersionCurrent.Text = null;
+            txtVersionChangeTo.Text = null;
+            txtSignatureCurrent.Text = null;
+            txtSignatureChangeTo.Text = null;
+            txtRecevedCode.Text = null;
+            DisableInputs(false);
         }
 
-        private void cboPrinterType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void Error_Output(string error)
         {
-            //SetEnable();
+            MessageBox.Show(error + "\nTry again!\nMaybe the wrong Device is connected or the wrong Printer Type is selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            clear_all_entries();
         }
 
-        private void SetEnable()
+        /* Open About Window */
+        private void credits_Click(object sender, RoutedEventArgs e)
         {
-            if (cboDevice.Text != string.Empty & cboPrinterType.Text != string.Empty)
-                cmdRead.IsEnabled = true;
-            else
+            if (this.aboutWindow == null)
             {
-                cmdRead.IsEnabled = false;
-                txtEEPROMUID.Text = string.Empty;
-                txtKeyFragment.Text = string.Empty;
-            }
-
-
-            if (cmdRead.IsEnabled & !string.IsNullOrEmpty(txtEEPROMUID.Text) & !string.IsNullOrEmpty(txtKeyFragment.Text))
-            {
-
+                this.aboutWindow = new AboutWindow();
+                this.aboutWindow.Closed += (cw, args) => this.aboutWindow = null;
+                this.aboutWindow.Show();
             }
         }
+
+        /* Open Help Window */
+        private void help_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.helpWindow == null)
+            {
+                this.helpWindow = new HelpWindow();
+                this.helpWindow.Closed += (cw, args) => this.helpWindow = null;
+                this.helpWindow.Show();
+            }
+        }
+
     }
+
 }

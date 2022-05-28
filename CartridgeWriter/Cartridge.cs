@@ -27,10 +27,8 @@
 
 using CartridgeWriterExtensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
 
 namespace CartridgeWriter
 {
@@ -61,8 +59,8 @@ namespace CartridgeWriter
     //       16 0x48: 0x10 - ^
     public class Cartridge
     {
-        private byte[] _encrypted = null;
-        private byte[] _decrypted = new byte[512];
+        public byte[] _encrypted = null;
+        private byte[] _decrypted = new byte[128];
         private Machine _machine = null;
         private byte[] _eepromUID = null;
         private byte[] _key = new byte[16];
@@ -84,6 +82,7 @@ namespace CartridgeWriter
             BuildKey();
             LoadCRC();
             Decrypt();
+
         }
 
         // Encrypted
@@ -98,6 +97,8 @@ namespace CartridgeWriter
         
         // EEPROMUID
         public byte[] EEPROMUID { get { return _eepromUID; } }
+
+        
 
         // Serial number
         public double SerialNumber
@@ -159,26 +160,26 @@ namespace CartridgeWriter
             }
             set
             {
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Year)), 0, _decrypted, 0x28, 2);
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Month)), 0, _decrypted, 0x2a, 1);
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Day)), 0, _decrypted, 0x2b, 1);
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Hour)), 0, _decrypted, 0x2c, 1);
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Minute)), 0, _decrypted, 0x2d, 1);
-                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Second)), 0, _decrypted, 0x2e, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Year)), 0, _decrypted, 0x30, 2);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Month)), 0, _decrypted, 0x32, 1);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Day)), 0, _decrypted, 0x33, 1);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Hour)), 0, _decrypted, 0x34, 1);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Minute)), 0, _decrypted, 0x35, 1);
+                Buffer.BlockCopy(BitConverter.GetBytes((ushort)(value.Second)), 0, _decrypted, 0x36, 2);
             }
         }
 
-        // Initial material quantity, in cubic feet
+        // Initial material quantity, in cubic inches
         public double InitialMaterialQuantity
         {
-            get { return BitConverter.ToDouble(_decrypted, 0x38); }
+            get { return 16.3871*BitConverter.ToDouble(_decrypted, 0x38); }
             set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, _decrypted, 0x38, 8); }
         }
 
         // Remaining material quantity
         public double CurrentMaterialQuantity
         {
-            get { return BitConverter.ToDouble(_decrypted, 0x58); }
+            get { return 16.3871*BitConverter.ToDouble(_decrypted, 0x58); }
             set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, _decrypted, 0x58, 8); }
         }
 
@@ -238,42 +239,46 @@ namespace CartridgeWriter
         //
         private void Decrypt()
         {
-            _encrypted.CopyTo(_decrypted, 0);
 
-            //
-            // Content
-            //
-            byte[] contentEncrypted = new byte[0x40];
-            Buffer.BlockCopy(_encrypted, 0, contentEncrypted, 0, 0x40);
+                _encrypted.CopyTo(_decrypted, 0);
 
-            // Validate crypted content checksum
-            if (!Crc16_Checksum.Checksum(contentEncrypted).SequenceEqual(_cryptedContentCRC))
-                throw new Exception("invalid crypted content checksum");
-            // Decrypt content
-            byte[] content = Desx_Crypto.Decrypt(_key, contentEncrypted);
-            Buffer.BlockCopy(content, 0, _decrypted, 0, 0x40);
-            // Validating plaintext checksum
-            if (!Crc16_Checksum.Checksum(content).SequenceEqual(_plainContentCRC))
-                throw new Exception(
-                    "invalid content checksum: should have " + _plainContentCRC.HexString() +
-                    " but have " + Crc16_Checksum.Checksum(content).HexString());
+                //
+                // Content
+                //
+                byte[] contentEncrypted = new byte[0x40];
+                Buffer.BlockCopy(_encrypted, 0, contentEncrypted, 0, 0x40);
 
-            //
-            // Current Material Quantity
-            //
-            byte[] currentMaterialQuantityEncrypted = new byte[8];
-            Buffer.BlockCopy(_encrypted, 0x58, currentMaterialQuantityEncrypted, 0, 8);
+                // Validate crypted content checksum
+                if (!Crc16_Checksum.Checksum(contentEncrypted).SequenceEqual(_cryptedContentCRC))
+                    throw new Exception("invalid crypted content checksum");
+                // Decrypt content
+                byte[] content = Desx_Crypto.Decrypt(_key, contentEncrypted);
+                Buffer.BlockCopy(content, 0, _decrypted, 0, 0x40);
+                // Validating plaintext checksum
+                if (!Crc16_Checksum.Checksum(content).SequenceEqual(_plainContentCRC))
+                    throw new Exception(
+                        "invalid content checksum: should have " + _plainContentCRC.HexString() +
+                        " but have " + Crc16_Checksum.Checksum(content).HexString());
 
-            // Validate crypted current material quantity checksum
-            if (!Crc16_Checksum.Checksum(currentMaterialQuantityEncrypted).SequenceEqual(_currentMaterialQuantityCryptedCRC))
-                throw new Exception("invalid current material quantity checksum");
-            // Decrypt current material quantity
-            byte[] currentMaterialQuantityDecrypted = Desx_Crypto.Decrypt(_key, currentMaterialQuantityEncrypted);
-            Buffer.BlockCopy(currentMaterialQuantityDecrypted, 0, _decrypted, 0x58, 8);
-            // Validating current material quantity checksum
-            if (!Crc16_Checksum.Checksum(currentMaterialQuantityDecrypted).SequenceEqual(_currentMaterialQuantityCRC))
-                throw new Exception("invalid current material quantity checksum");
+                //
+                // Current Material Quantity
+                //
+                byte[] currentMaterialQuantityEncrypted = new byte[8];
+                Buffer.BlockCopy(_encrypted, 0x58, currentMaterialQuantityEncrypted, 0, 8);
+
+                // Validate crypted current material quantity checksum
+                if (!Crc16_Checksum.Checksum(currentMaterialQuantityEncrypted).SequenceEqual(_currentMaterialQuantityCryptedCRC))
+                    throw new Exception("invalid current material quantity checksum");
+                // Decrypt current material quantity
+                byte[] currentMaterialQuantityDecrypted = Desx_Crypto.Decrypt(_key, currentMaterialQuantityEncrypted);
+                Buffer.BlockCopy(currentMaterialQuantityDecrypted, 0, _decrypted, 0x58, 8);
+                // Validating current material quantity checksum
+                if (!Crc16_Checksum.Checksum(currentMaterialQuantityDecrypted).SequenceEqual(_currentMaterialQuantityCRC))
+                    throw new Exception("invalid current material quantity checksum");
+
+            
         }
+
 
         //
         // Build a key used to encrypt/decrypt a cartridge
